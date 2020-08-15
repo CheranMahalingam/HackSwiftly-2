@@ -52,7 +52,6 @@ public class ARTapToPlaceObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        touchPosition = Input.GetTouch(0).position;
         if (previewing)
         {
             Destroy(previewing);
