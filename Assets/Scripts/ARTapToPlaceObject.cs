@@ -19,6 +19,7 @@ public class ARTapToPlaceObject : MonoBehaviour
     private GameObject objectToPlace;// selected item from list of item above
     private GameObject objectPreview;
     private GameObject previewing = null;
+    private GameObject newObject;
 	private List<GameObject> objectsPlaced;
     private List<GameObject> objectsRemoved;
     private Vector2 fingerLeft;//swipe detection
@@ -124,7 +125,7 @@ public class ARTapToPlaceObject : MonoBehaviour
     {
         if (objectToPlace)
         {
-            GameObject newObject = Instantiate(objectToPlace, placementPose.position, placementPose.rotation) as GameObject;
+            newObject = Instantiate(objectToPlace, placementPose.position, placementPose.rotation) as GameObject;
             newObject.name = "obj" + objectsPlaced.Count.ToString();
             objectsPlaced.Add(newObject);
             //Instantiate(objectToPlace, placementPose.position, placementPose.rotation);
@@ -146,6 +147,7 @@ public class ARTapToPlaceObject : MonoBehaviour
         {
             Debug.LogWarning("Raycast works");
             Debug.LogWarning(hit.transform.name);
+            Destroy(hit.transform.gameObject);
             if (hit.transform.name == "NaturePack_Grass1")
             {
                 Debug.LogWarning("name works");
