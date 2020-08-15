@@ -20,6 +20,7 @@ public class ARTapToPlaceObject : MonoBehaviour
     private GameObject objectPreview;
     private GameObject previewing = null;
 	private List<GameObject> objectsPlaced;
+    private List<GameObject> objectsRemoved;
     private Vector2 fingerLeft;//swipe detection
     private Vector2 fingerRight;//swipe detection
     public Canvas canvas;
@@ -112,7 +113,8 @@ public class ARTapToPlaceObject : MonoBehaviour
                 //objectPreview.transform.SetPositionAndRotation(placementPose.position, placementPose.rotation);
                 previewing = Instantiate(objectPreview, placementPose.position, placementPose.rotation) as GameObject;
             }
-        } else
+        } 
+        else
         {
             placementIndicator.SetActive(false);
         }
@@ -132,7 +134,14 @@ public class ARTapToPlaceObject : MonoBehaviour
     public void DeleteLastObject()
     {
         Destroy(objectsPlaced[objectsPlaced.Count - 1]);
+        objectsRemoved.Add(objectsPlaced[objectsPlaced.Count - 1]);
         objectsPlaced.RemoveAt(objectsPlaced.Count - 1);
+    }
+
+    public void AddLastObject()
+    {
+        GameObject newObject = Instantiate(objectsRemoved[objectsRemoved.Count - 1], placementPose.position, placementPose.rotation) as GameObject;
+        objectsPlaced.Add(newObject);
     }
 
     private bool IsPointerAboveUIObject()
