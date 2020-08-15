@@ -134,14 +134,30 @@ public class ARTapToPlaceObject : MonoBehaviour
     public void DeleteLastObject()
     {
         Destroy(objectsPlaced[objectsPlaced.Count - 1]);
-        objectsRemoved.Add(objectsPlaced[objectsPlaced.Count - 1]);
+        //objectsRemoved.Add(objectsPlaced[objectsPlaced.Count - 1]);
         objectsPlaced.RemoveAt(objectsPlaced.Count - 1);
+    }
+
+    public void DeleteObject()
+    {
+        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit))
+        {
+            Debug.LogWarning("Raycast works");
+            Debug.LogWarning(hit.transform.name);
+            if (hit.transform.name == "NaturePack_Grass1")
+            {
+                Debug.LogWarning("name works");
+                Destroy(hit.transform.gameObject);
+            }
+        }
     }
 
     public void AddLastObject()
     {
-        GameObject newObject = Instantiate(objectsRemoved[objectsRemoved.Count - 1], placementPose.position, placementPose.rotation) as GameObject;
-        objectsPlaced.Add(newObject);
+        GameObject oldObject = Instantiate(objectsRemoved[objectsRemoved.Count - 1], placementPose.position, placementPose.rotation) as GameObject;
+        objectsPlaced.Add(oldObject);
     }
 
     private bool IsPointerAboveUIObject()
