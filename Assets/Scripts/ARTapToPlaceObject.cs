@@ -25,9 +25,7 @@ public class ARTapToPlaceObject : MonoBehaviour
     public Canvas canvas;
     private bool detectSwipe = false;
     private float SWIPE_THRESHOLD = 100f;
-    private GameObject objectTest;
     private static List<ARRaycastHit> hits = new List<ARRaycastHit>();
-    private Vector2 touchPosition;
 
     // Hardcoding researched data
     private string[] countries = { "Africa", "Algeria", "Argentina", "Asia", "Asia (excl. China & India)", "Australia", "Austria", "Azerbaijan", "Bangladesh", "Belarus", "Belgium", "Brazil", "Bulgaria", "Canada", "Chile", "China", "Colombia", "Croatia", "Cyprus", "Czech Republic", "Denmark", "EU-27", "EU-28", "Ecuador", "Egypt", "Estonia", "Europe", "Europe (excl. EU-27)", "Europe (excl. EU-28)", "Finland", "France", "Germany", "Greece", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Japan", "Kazakhstan", "Kuwait", "Latvia", "Lithuania", "Luxembourg", "Macedonia", "Malaysia", "Mexico", "Morocco", "Netherlands", "New Zealand", "North America", "North America (excl. USA)", "Norway", "Oceania", "Oman", "Pakistan", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Saudi Arabia", "Singapore", "Slovakia", "Slovenia", "South Africa", "South America", "South Korea", "Spain", "Sri Lanka", "Sweden", "Switzerland", "Taiwan", "Thailand", "Trinidad and Tobago", "Turkey", "Turkmenistan", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uzbekistan", "Venezuela", "Vietnam", "World" };
@@ -124,10 +122,10 @@ public class ARTapToPlaceObject : MonoBehaviour
     {
         if (objectToPlace)
         {
-            //GameObject newObject = Instantiate(objectToPlace, placementPose.position, placementPose.rotation) as GameObject;
-            //newObject.name = "obj" + objectsPlaced.Count.ToString();
-            //objectsPlaced.Add(newObject);
-            Instantiate(objectToPlace, placementPose.position, placementPose.rotation);
+            GameObject newObject = Instantiate(objectToPlace, placementPose.position, placementPose.rotation) as GameObject;
+            newObject.name = "obj" + objectsPlaced.Count.ToString();
+            objectsPlaced.Add(newObject);
+            //Instantiate(objectToPlace, placementPose.position, placementPose.rotation);
         }
     }
 
@@ -135,20 +133,6 @@ public class ARTapToPlaceObject : MonoBehaviour
     {
         Destroy(objectsPlaced[objectsPlaced.Count - 1]);
         objectsPlaced.RemoveAt(objectsPlaced.Count - 1);
-    }
-
-    public void DeleteObject()
-    {
-        Touch touch = Input.GetTouch(0);
-        if (touch.phase == TouchPhase.Began)
-        {
-            Ray ray = Camera.main.ScreenPointToRay(touchPosition);
-            RaycastHit hitObject;
-            if (Physics.Raycast(ray, out hitObject))
-            {
-                Destroy(objectTest);
-            }
-        }
     }
 
     private bool IsPointerAboveUIObject()
@@ -171,7 +155,6 @@ public class ARTapToPlaceObject : MonoBehaviour
         {
             hideUI();
             detectSwipe = true;
-            objectTest = Instantiate(grass, placementPose.position, placementPose.rotation) as GameObject;
         }
     }
 
