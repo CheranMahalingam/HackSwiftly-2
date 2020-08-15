@@ -9,7 +9,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: centerButton
+    m_ConditionEvent: centerLeftButton
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -1834239700368624322}
@@ -34,7 +34,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: centerButton
+    m_ConditionEvent: centerLeftButton
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -814590512515882181}
@@ -86,7 +86,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: centerButton
+    m_ConditionEvent: centerLeftButton
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -1379809535682359678}
@@ -165,7 +165,7 @@ AnimatorController:
   m_Name: cross
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: centerButton
+  - m_Name: centerLeftButton
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
