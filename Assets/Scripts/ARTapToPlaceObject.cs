@@ -156,9 +156,17 @@ public class ARTapToPlaceObject : MonoBehaviour
     {
         if (objectToPlace)
         {
+            if (objectSelected)
+            {
+                changes.Push(2);
+                objectsChanged.Push(objectSelected);
+                changes.Push(3);
+            }
+            else
+                changes.Push(1);
+
             GameObject newObject = Instantiate(objectToPlace, placementPose.position, placementPose.rotation) as GameObject;
             objectsChanged.Push(newObject);
-            changes.Push(1);
             clearRedoStack();
         }
     }
@@ -194,20 +202,29 @@ public class ARTapToPlaceObject : MonoBehaviour
         if (changes.Count == 0) // empty stack
             return;
 
-        int lastChange = changes.Pop();
-        if (lastChange == 1)
+        int itemsToPop;
+        if (changes.Peek() >= 2)
+            itemsToPop = 2;
+        else
+            itemsToPop = 1;
+
+        for (int i = 0;i < itemsToPop;i++)
         {
-            GameObject currentObject = objectsChanged.Pop();
-            currentObject.SetActive(false);
-            undoneObjects.Push(currentObject);
-            undoneChanges.Push(0);
-        }
-        else if (lastChange == 0)
-        {
-            GameObject currentObject = objectsChanged.Pop();
-            currentObject.SetActive(true);
-            undoneObjects.Push(currentObject);
-            undoneChanges.Push(1);
+            int lastChange = changes.Pop();
+            if (lastChange % 2 == 1)
+            {
+                GameObject currentObject = objectsChanged.Pop();
+                currentObject.SetActive(false);
+                undoneObjects.Push(currentObject);
+                undoneChanges.Push(lastChange ^ 1);
+            }
+            else if (lastChange % 2 == 0)
+            {
+                GameObject currentObject = objectsChanged.Pop();
+                currentObject.SetActive(true);
+                undoneObjects.Push(currentObject);
+                undoneChanges.Push(lastChange ^ 1);
+            }
         }
     }
 
@@ -218,20 +235,29 @@ public class ARTapToPlaceObject : MonoBehaviour
         if (undoneChanges.Count == 0) // empty stack
             return;
 
-        int lastChange = undoneChanges.Pop();
-        if (lastChange == 0)
+        int itemsToPop;
+        if (undoneChanges.Peek() >= 2)
+            itemsToPop = 2;
+        else
+            itemsToPop = 1;
+
+        for (int i = 0;i < itemsToPop;i++)
         {
-            GameObject currentObject = undoneObjects.Pop();
-            currentObject.SetActive(true);
-            objectsChanged.Push(currentObject);
-            changes.Push(1);
-        }
-        else if (lastChange == 1)
-        {
-            GameObject currentObject = undoneObjects.Pop();
-            currentObject.SetActive(false);
-            objectsChanged.Push(currentObject);
-            changes.Push(0);
+            int lastChange = undoneChanges.Pop();
+            if (lastChange % 2 == 0)
+            {
+                GameObject currentObject = undoneObjects.Pop();
+                currentObject.SetActive(true);
+                objectsChanged.Push(currentObject);
+                changes.Push(lastChange ^ 1);
+            }
+            else if (lastChange % 2 == 1)
+            {
+                GameObject currentObject = undoneObjects.Pop();
+                currentObject.SetActive(false);
+                objectsChanged.Push(currentObject);
+                changes.Push(lastChange ^ 1);
+            }
         }
     }
 
@@ -239,13 +265,13 @@ public class ARTapToPlaceObject : MonoBehaviour
     {
         while (undoneChanges.Count > 0)
         {
-            if (undoneChanges.Pop() == 0)
+            if (undoneChanges.Pop() % 2 == 0)
                 Destroy(undoneObjects.Peek());
             undoneObjects.Pop();
         }
     }
 
-    public void previewMode()
+    public void previewMode()   // called when cancelled but not checkmarked
     {
         checkPreview = !checkPreview;
         if (objectSelected && !checkPreview)
@@ -260,6 +286,8 @@ public class ARTapToPlaceObject : MonoBehaviour
         if (placementPoseIsValid)
         {
             PlaceObject();
+            if (objectSelected)
+                objectSelected = null;
             checkPreview = false;
         }
     }
