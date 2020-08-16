@@ -5,6 +5,8 @@ using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 using System;
 using UnityEngine.EventSystems;
+using System.Diagnostics;
+using DanielLochner.Assets.SimpleScrollSnap;
 
 public class ARTapToPlaceObject : MonoBehaviour
 {
@@ -13,7 +15,7 @@ public class ARTapToPlaceObject : MonoBehaviour
     private bool placementPoseIsValid = false;//place holder that change when falt surface detexted
     private bool checkPreview = false;
     public GameObject placementIndicator;//indicator of flat floor (a picture)
-/////////list of item that you can select////////
+                                         /////////list of item that you can select////////
     public GameObject microwave;
     public GameObject tree;
     public GameObject grass;
@@ -40,6 +42,20 @@ public class ARTapToPlaceObject : MonoBehaviour
     public Animator animator6;
     public Animator trashAnimator;
 
+    public Animator TreeSelectorAnimator;
+    public Animator FlowerSelectorAnimator;
+    public Animator ApplianceSelectorAnimator;
+    public Animator TypeSelectorAnimator;
+
+    public SimpleScrollSnap TreeSelector;
+    public SimpleScrollSnap FlowerSelector;
+    public SimpleScrollSnap ApplianceSelector;
+    public SimpleScrollSnap TypeSelector;
+
+    private int PrevType = 0;
+    private bool MenuState = false;
+
+
     // Hardcoding researched data
     private string[] countries = { "Africa", "Algeria", "Argentina", "Asia", "Asia (excl. China & India)", "Australia", "Austria", "Azerbaijan", "Bangladesh", "Belarus", "Belgium", "Brazil", "Bulgaria", "Canada", "Chile", "China", "Colombia", "Croatia", "Cyprus", "Czech Republic", "Denmark", "EU-27", "EU-28", "Ecuador", "Egypt", "Estonia", "Europe", "Europe (excl. EU-27)", "Europe (excl. EU-28)", "Finland", "France", "Germany", "Greece", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Japan", "Kazakhstan", "Kuwait", "Latvia", "Lithuania", "Luxembourg", "Macedonia", "Malaysia", "Mexico", "Morocco", "Netherlands", "New Zealand", "North America", "North America (excl. USA)", "Norway", "Oceania", "Oman", "Pakistan", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Saudi Arabia", "Singapore", "Slovakia", "Slovenia", "South Africa", "South America", "South Korea", "Spain", "Sri Lanka", "Sweden", "Switzerland", "Taiwan", "Thailand", "Trinidad and Tobago", "Turkey", "Turkmenistan", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uzbekistan", "Venezuela", "Vietnam", "World" };
     private Dictionary<string, int> countryIndex = new Dictionary<string, int>();
@@ -49,7 +65,7 @@ public class ARTapToPlaceObject : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.LogWarning(System.Globalization.RegionInfo.CurrentRegion.EnglishName);
+       UnityEngine.Debug.LogWarning(System.Globalization.RegionInfo.CurrentRegion.EnglishName);
         rayManager = FindObjectOfType<ARRaycastManager>();
         canvas.enabled = false;
 
@@ -145,7 +161,7 @@ public class ARTapToPlaceObject : MonoBehaviour
                 //objectPreview.transform.SetPositionAndRotation(placementPose.position, placementPose.rotation);
                 previewing = Instantiate(objectPreview, placementPose.position, placementPose.rotation) as GameObject;
             }
-        } 
+        }
         else
         {
             placementIndicator.SetActive(false);
@@ -208,7 +224,7 @@ public class ARTapToPlaceObject : MonoBehaviour
         else
             itemsToPop = 1;
 
-        for (int i = 0;i < itemsToPop;i++)
+        for (int i = 0; i < itemsToPop; i++)
         {
             int lastChange = changes.Pop();
             if (lastChange % 2 == 1)
@@ -241,7 +257,7 @@ public class ARTapToPlaceObject : MonoBehaviour
         else
             itemsToPop = 1;
 
-        for (int i = 0;i < itemsToPop;i++)
+        for (int i = 0; i < itemsToPop; i++)
         {
             int lastChange = undoneChanges.Pop();
             if (lastChange % 2 == 0)
@@ -352,5 +368,63 @@ public class ARTapToPlaceObject : MonoBehaviour
     {
         Vibration.VibrateMs(200);
     }
+
+    public void ToggleMainMenu()
+    {
+        UnityEngine.Debug.LogWarning(TypeSelector.CurrentPanel);
+        
+        if(TypeSelector.CurrentPanel == 0)
+        {
+            FlowerSelectorAnimator.SetTrigger("Toggle");
+        }
+
+        else if (TypeSelector.CurrentPanel == 1)
+        {
+            TreeSelectorAnimator.SetTrigger("Toggle");
+        }
+        
+        else if (TypeSelector.CurrentPanel == 2)
+        {
+            ApplianceSelectorAnimator.SetTrigger("Toggle");
+        }
+        MenuState = !MenuState;
+    }
+
+    public void ChangeMainMenu()
+    {
+        if (MenuState) { 
+            if (PrevType == 0)
+            {
+                FlowerSelectorAnimator.SetTrigger("Toggle");
+            }
+
+            else if (PrevType == 1)
+            {
+                TreeSelectorAnimator.SetTrigger("Toggle");
+            }
+
+            else if (PrevType == 2)
+            {
+                ApplianceSelectorAnimator.SetTrigger("Toggle");
+            }
+
+            if (TypeSelector.CurrentPanel == 0)
+            {
+                FlowerSelectorAnimator.SetTrigger("Toggle");
+            }
+
+            else if (TypeSelector.CurrentPanel == 1)
+            {
+                TreeSelectorAnimator.SetTrigger("Toggle");
+            }
+
+            else if (TypeSelector.CurrentPanel == 2)
+            {
+                ApplianceSelectorAnimator.SetTrigger("Toggle");
+            }
+        }
+        PrevType = TypeSelector.CurrentPanel; 
+    }
+
 
 }
