@@ -27,6 +27,8 @@ public class ARTapToPlaceObject : MonoBehaviour
     private bool detectSwipe = false;
     private float SWIPE_THRESHOLD = 100f;
     private static List<ARRaycastHit> hits = new List<ARRaycastHit>();
+    private Stack objectsChanged = new Stack();
+    private Stack changes = new Stack(); 
 
     // Hardcoding researched data
     private string[] countries = { "Africa", "Algeria", "Argentina", "Asia", "Asia (excl. China & India)", "Australia", "Austria", "Azerbaijan", "Bangladesh", "Belarus", "Belgium", "Brazil", "Bulgaria", "Canada", "Chile", "China", "Colombia", "Croatia", "Cyprus", "Czech Republic", "Denmark", "EU-27", "EU-28", "Ecuador", "Egypt", "Estonia", "Europe", "Europe (excl. EU-27)", "Europe (excl. EU-28)", "Finland", "France", "Germany", "Greece", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Japan", "Kazakhstan", "Kuwait", "Latvia", "Lithuania", "Luxembourg", "Macedonia", "Malaysia", "Mexico", "Morocco", "Netherlands", "New Zealand", "North America", "North America (excl. USA)", "Norway", "Oceania", "Oman", "Pakistan", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Saudi Arabia", "Singapore", "Slovakia", "Slovenia", "South Africa", "South America", "South Korea", "Spain", "Sri Lanka", "Sweden", "Switzerland", "Taiwan", "Thailand", "Trinidad and Tobago", "Turkey", "Turkmenistan", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uzbekistan", "Venezuela", "Vietnam", "World" };
@@ -45,6 +47,8 @@ public class ARTapToPlaceObject : MonoBehaviour
         {
             countryIndex[countries[i]] = i;
         }
+
+        Debug.LogWarning("Hello");
     }
 
     // Update is called once per frame
@@ -123,7 +127,9 @@ public class ARTapToPlaceObject : MonoBehaviour
     {
         if (objectToPlace)
         {
-            Instantiate(objectToPlace, placementPose.position, placementPose.rotation);
+            GameObject newObject = Instantiate(objectToPlace, placementPose.position, placementPose.rotation) as GameObject;
+            objectsChanged.Push(newObject);
+            changes.Push(1);
         }
     }
 
@@ -138,9 +144,17 @@ public class ARTapToPlaceObject : MonoBehaviour
             if (hit.transform.name == "NaturePack_Grass1" || hit.transform.name == "default"  || hit.transform.name == "Plane.001")
             {
                 Debug.LogWarning("name works");
-                //Destroy(hit.transform.gameObject);
-
+                Destroy(hit.transform.gameObject);
             }
+        }
+    }
+
+    public void undo()
+    {
+        if (changes.Pop() == 1)  // already popped!
+        {
+            GameObject currentObject = objectsChanged.Pop();
+            currentObject.setActive(false);
         }
     }
 
