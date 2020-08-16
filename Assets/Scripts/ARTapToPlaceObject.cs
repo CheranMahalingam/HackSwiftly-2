@@ -51,8 +51,6 @@ public class ARTapToPlaceObject : MonoBehaviour
         {
             countryIndex[countries[i]] = i;
         }
-
-        Debug.LogWarning(System.Globalization.RegionInfo.CurrentRegion.EnglishName);
     }
 
     // Update is called once per frame
