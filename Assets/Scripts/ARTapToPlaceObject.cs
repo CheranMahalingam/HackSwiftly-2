@@ -42,8 +42,8 @@ public class ARTapToPlaceObject : MonoBehaviour
     public Animator animator6;
     public Animator trashAnimator;
     private int cnt = 0;
-    public Text carbonFootprint;
-    private Text text; 
+    private Text text;
+    private string userCountry; 
 
     // Hardcoding researched data
     private string[] countries = { "Africa", "Algeria", "Argentina", "Asia", "Asia (excl. China & India)", "Australia", "Austria", "Azerbaijan", "Bangladesh", "Belarus", "Belgium", "Brazil", "Bulgaria", "Canada", "Chile", "China", "Colombia", "Croatia", "Cyprus", "Czech Republic", "Denmark", "EU-27", "EU-28", "Ecuador", "Egypt", "Estonia", "Europe", "Europe (excl. EU-27)", "Europe (excl. EU-28)", "Finland", "France", "Germany", "Greece", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Japan", "Kazakhstan", "Kuwait", "Latvia", "Lithuania", "Luxembourg", "Macedonia", "Malaysia", "Mexico", "Morocco", "Netherlands", "New Zealand", "North America", "North America (excl. USA)", "Norway", "Oceania", "Oman", "Pakistan", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Saudi Arabia", "Singapore", "Slovakia", "Slovenia", "South Africa", "South America", "South Korea", "Spain", "Sri Lanka", "Sweden", "Switzerland", "Taiwan", "Thailand", "Trinidad and Tobago", "Turkey", "Turkmenistan", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uzbekistan", "Venezuela", "Vietnam", "World" };
@@ -91,7 +91,7 @@ public class ARTapToPlaceObject : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.LogWarning(System.Globalization.RegionInfo.CurrentRegion.EnglishName);
+        userCountry = System.Globalization.RegionInfo.CurrentRegion.EnglishName;
         rayManager = FindObjectOfType<ARRaycastManager>();
         canvas.enabled = false;
 
@@ -100,6 +100,8 @@ public class ARTapToPlaceObject : MonoBehaviour
         {
             countryIndex[countries[i]] = i;
         }
+
+        
     }
 
     // Update is called once per frame
