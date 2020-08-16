@@ -6,7 +6,6 @@ using UnityEngine.XR.ARSubsystems;
 using System;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using DanielLochner.Assets.SimpleScrollSnap;
 
 public class ARTapToPlaceObject : MonoBehaviour
 {
@@ -15,7 +14,7 @@ public class ARTapToPlaceObject : MonoBehaviour
     private bool placementPoseIsValid = false;//place holder that change when falt surface detexted
     private bool checkPreview;
     public GameObject placementIndicator;//indicator of flat floor (a picture)
-                                         /////////list of item that you can select////////
+/////////list of item that you can select////////
     public GameObject microwave;
     public GameObject tree;
     public GameObject grass;
@@ -43,13 +42,16 @@ public class ARTapToPlaceObject : MonoBehaviour
     public Animator animator6;
     public Animator trashAnimator;
     private int cnt = 0;
-<<<<<<< HEAD
     public Text carbonFootprint;
-    private Text text; 
-=======
     private Text text;
-    private string userCountry; 
->>>>>>> parent of bb37def... Merge branch 'master' of https://github.com/CheranMahalingam/HackSwiftly-2
+    private int footprintValue = 0;
+    private int objectFootprint = 0;
+
+    // Temporary values (NOT ACCURATE)
+    private int microwaveFootprint = 5;
+    private int treeFootprint = -3;
+    private int grassFootprint = -1;
+    private int indoorPlantFootprint = -2;
 
     // Hardcoding researched data
     private string[] countries = { "Africa", "Algeria", "Argentina", "Asia", "Asia (excl. China & India)", "Australia", "Austria", "Azerbaijan", "Bangladesh", "Belarus", "Belgium", "Brazil", "Bulgaria", "Canada", "Chile", "China", "Colombia", "Croatia", "Cyprus", "Czech Republic", "Denmark", "EU-27", "EU-28", "Ecuador", "Egypt", "Estonia", "Europe", "Europe (excl. EU-27)", "Europe (excl. EU-28)", "Finland", "France", "Germany", "Greece", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Japan", "Kazakhstan", "Kuwait", "Latvia", "Lithuania", "Luxembourg", "Macedonia", "Malaysia", "Mexico", "Morocco", "Netherlands", "New Zealand", "North America", "North America (excl. USA)", "Norway", "Oceania", "Oman", "Pakistan", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Saudi Arabia", "Singapore", "Slovakia", "Slovenia", "South Africa", "South America", "South Korea", "Spain", "Sri Lanka", "Sweden", "Switzerland", "Taiwan", "Thailand", "Trinidad and Tobago", "Turkey", "Turkmenistan", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uzbekistan", "Venezuela", "Vietnam", "World" };
@@ -97,7 +99,7 @@ public class ARTapToPlaceObject : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.LogWarning(System.Globalization.RegionInfo.CurrentRegion.EnglishName);
+        userCountry = System.Globalization.RegionInfo.CurrentRegion.EnglishName;
         rayManager = FindObjectOfType<ARRaycastManager>();
         canvas.enabled = false;
 
@@ -106,6 +108,8 @@ public class ARTapToPlaceObject : MonoBehaviour
         {
             countryIndex[countries[i]] = i;
         }
+
+        
     }
 
     // Update is called once per frame
@@ -162,6 +166,8 @@ public class ARTapToPlaceObject : MonoBehaviour
                                 selectTree();
                             else if (hit.transform.name == "Plane.001")
                                 selectMicrowave();
+                            footprintValue -= objectFootprint;
+                            text.text = footprintValue.ToString();
                         }
                     }
                 }
@@ -197,7 +203,7 @@ public class ARTapToPlaceObject : MonoBehaviour
                 //objectPreview.transform.SetPositionAndRotation(placementPose.position, placementPose.rotation);
                 previewing = Instantiate(objectPreview, placementPose.position, placementPose.rotation) as GameObject;
             }
-        }
+        } 
         else
         {
             placementIndicator.SetActive(false);
@@ -218,7 +224,8 @@ public class ARTapToPlaceObject : MonoBehaviour
                 changes.Push(1);
 
             GameObject newObject = Instantiate(objectToPlace, placementPose.position, placementPose.rotation) as GameObject;
-            text.text = "Text has changed";
+            footprintValue += objectFootprint;
+            text.text = footprintValue.ToString();
             objectsChanged.Push(newObject);
             clearRedoStack();
         }
@@ -295,7 +302,7 @@ public class ARTapToPlaceObject : MonoBehaviour
         else
             itemsToPop = 1;
 
-        for (int i = 0; i < itemsToPop; i++)
+        for (int i = 0;i < itemsToPop;i++)
         {
             int lastChange = undoneChanges.Pop();
             if (lastChange % 2 == 0)
@@ -332,6 +339,8 @@ public class ARTapToPlaceObject : MonoBehaviour
         {
             objectSelected.SetActive(true);
             objectSelected = null;
+            footprintValue += objectFootprint;
+            text.text = footprintValue.ToString();
         }
     }
 
@@ -389,87 +398,33 @@ public class ARTapToPlaceObject : MonoBehaviour
     {
         objectToPlace = microwave;
         objectPreview = microwave;
+        objectFootprint = microwaveFootprint;
     }
 
     public void selectTree()
     {
         objectToPlace = tree;
         objectPreview = tree;
+        objectFootprint = treeFootprint;
     }
 
     public void selectGrass()
     {
         objectToPlace = grass;
         objectPreview = grass;
+        objectFootprint = grassFootprint;
     }
 
     public void selectIndoorPlant()
     {
         objectToPlace = indoorPlant;
         objectPreview = indoorPlant;
+        objectFootprint = indoorPlantFootprint;
     }
 
     public void HapticFeedBack()
     {
         Vibration.VibrateMs(200);
     }
-
-    public void ToggleMainMenu()
-    {
-        UnityEngine.Debug.LogWarning(TypeSelector.CurrentPanel);
-        
-        if(TypeSelector.CurrentPanel == 0)
-        {
-            FlowerSelectorAnimator.SetTrigger("Toggle");
-        }
-
-        else if (TypeSelector.CurrentPanel == 1)
-        {
-            TreeSelectorAnimator.SetTrigger("Toggle");
-        }
-        
-        else if (TypeSelector.CurrentPanel == 2)
-        {
-            ApplianceSelectorAnimator.SetTrigger("Toggle");
-        }
-        MenuState = !MenuState;
-    }
-
-    public void ChangeMainMenu()
-    {
-        if (MenuState) { 
-            if (PrevType == 0)
-            {
-                FlowerSelectorAnimator.SetTrigger("Toggle");
-            }
-
-            else if (PrevType == 1)
-            {
-                TreeSelectorAnimator.SetTrigger("Toggle");
-            }
-
-            else if (PrevType == 2)
-            {
-                ApplianceSelectorAnimator.SetTrigger("Toggle");
-            }
-
-            if (TypeSelector.CurrentPanel == 0)
-            {
-                FlowerSelectorAnimator.SetTrigger("Toggle");
-            }
-
-            else if (TypeSelector.CurrentPanel == 1)
-            {
-                TreeSelectorAnimator.SetTrigger("Toggle");
-            }
-
-            else if (TypeSelector.CurrentPanel == 2)
-            {
-                ApplianceSelectorAnimator.SetTrigger("Toggle");
-            }
-        }
-        PrevType = TypeSelector.CurrentPanel; 
-    }
-
 
 }
