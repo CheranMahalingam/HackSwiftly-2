@@ -50,7 +50,6 @@ public class ARTapToPlaceObject : MonoBehaviour
     public Animator FlowerSelectorAnimator;
     public Animator ApplianceSelectorAnimator;
     public Animator TypeSelectorAnimator;
-    private string userCountry;
 
     public SimpleScrollSnap TreeSelector;
     public SimpleScrollSnap FlowerSelector;
