@@ -44,15 +44,7 @@ public class ARTapToPlaceObject : MonoBehaviour
     public Animator trashAnimator;
     private int cnt = 0;
     private Text text;
-    private int footprintValue = 0;
-    private int objectFootprint = 0;
-
-    // Temporary values (NOT ACCURATE)
-    private int microwaveFootprint = 5;
-    private int treeFootprint = -3;
-    private int grassFootprint = -1;
-    private int indoorPlantFootprint = -2;
-    private string userCountry;
+    private string userCountry; 
 
     public Animator TreeSelectorAnimator;
     public Animator FlowerSelectorAnimator;
@@ -106,7 +98,7 @@ public class ARTapToPlaceObject : MonoBehaviour
         // Provide Text position and size using RectTransform.
         RectTransform rectTransform;
         rectTransform = text.GetComponent<RectTransform>();
-        rectTransform.localPosition = new Vector3(400, 400, 0);
+        rectTransform.localPosition = new Vector3(0, 0, 0);
         rectTransform.sizeDelta = new Vector2(600, 200);
     }
 
@@ -181,8 +173,6 @@ public class ARTapToPlaceObject : MonoBehaviour
                                 selectTree();
                             else if (hit.transform.name == "Plane.001")
                                 selectMicrowave();
-                            footprintValue -= objectFootprint;
-                            text.text = footprintValue.ToString();
                         }
                     }
                 }
@@ -239,8 +229,7 @@ public class ARTapToPlaceObject : MonoBehaviour
                 changes.Push(1);
 
             GameObject newObject = Instantiate(objectToPlace, placementPose.position, placementPose.rotation) as GameObject;
-            footprintValue += objectFootprint;
-            text.text = footprintValue.ToString();
+            text.text = "Text has changed";
             objectsChanged.Push(newObject);
             clearRedoStack();
         }
@@ -281,6 +270,8 @@ public class ARTapToPlaceObject : MonoBehaviour
             itemsToPop = 2;
         else
             itemsToPop = 1;
+
+        text.text = "cool";
 
         for (int i = 0;i < itemsToPop;i++)
         {
@@ -352,8 +343,6 @@ public class ARTapToPlaceObject : MonoBehaviour
         {
             objectSelected.SetActive(true);
             objectSelected = null;
-            footprintValue += objectFootprint;
-            text.text = footprintValue.ToString();
         }
     }
 
@@ -374,6 +363,7 @@ public class ARTapToPlaceObject : MonoBehaviour
         eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
         List<RaycastResult> results = new List<RaycastResult>();
         EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+        Debug.LogWarning("Pointer");
         return results.Count > 0;
     }
 
@@ -410,28 +400,24 @@ public class ARTapToPlaceObject : MonoBehaviour
     {
         objectToPlace = microwave;
         objectPreview = microwave;
-        objectFootprint = microwaveFootprint;
     }
 
     public void selectTree()
     {
         objectToPlace = tree;
         objectPreview = tree;
-        objectFootprint = treeFootprint;
     }
 
     public void selectGrass()
     {
         objectToPlace = grass;
         objectPreview = grass;
-        objectFootprint = grassFootprint;
     }
 
     public void selectIndoorPlant()
     {
         objectToPlace = indoorPlant;
         objectPreview = indoorPlant;
-        objectFootprint = indoorPlantFootprint;
     }
 
     public void HapticFeedBack()
