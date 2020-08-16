@@ -32,8 +32,10 @@ public class ARTapToPlaceObject : MonoBehaviour
     private static List<ARRaycastHit> hits = new List<ARRaycastHit>();
     private Stack<GameObject> objectsChanged = new Stack<GameObject>();
     private Stack<int> changes = new Stack<int>();
+    private Stack<double> footprintChanges = new Stack<double>();
     private Stack<GameObject> undoneObjects = new Stack<GameObject>();
     private Stack<int> undoneChanges = new Stack<int>();
+    private Stack<double> undoneFootprint = new Stack<double>();
     public Animator animator1;
     public Animator animator2;
     public Animator animator3;
@@ -45,14 +47,14 @@ public class ARTapToPlaceObject : MonoBehaviour
     private Text text;
     private string userCountry;
     private double userPerCapita, userEmissionPerEnergy;
-    private int footprintValue = 0;
-    private int objectFootprint = 0;
+    private double footprintValue = 0;
+    private double objectFootprint = 0;
 
     // Temporary values (NOT ACCURATE)
-    private int microwaveFootprint = 5;
-    private int treeFootprint = -3;
-    private int grassFootprint = -1;
-    private int indoorPlantFootprint = -2;
+    private double microwaveFootprint = 5.5;
+    private double treeFootprint = -3.1;
+    private double grassFootprint = -1.2;
+    private double indoorPlantFootprint = -1.8;
 
     // Hardcoding researched data
     private string[] countries = { "Africa", "Algeria", "Argentina", "Asia", "Asia (excl. China & India)", "Australia", "Austria", "Azerbaijan", "Bangladesh", "Belarus", "Belgium", "Brazil", "Bulgaria", "Canada", "Chile", "China", "Colombia", "Croatia", "Cyprus", "Czech Republic", "Denmark", "EU-27", "EU-28", "Ecuador", "Egypt", "Estonia", "Europe", "Europe (excl. EU-27)", "Europe (excl. EU-28)", "Finland", "France", "Germany", "Greece", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Japan", "Kazakhstan", "Kuwait", "Latvia", "Lithuania", "Luxembourg", "Macedonia", "Malaysia", "Mexico", "Morocco", "Netherlands", "New Zealand", "North America", "North America (excl. USA)", "Norway", "Oceania", "Oman", "Pakistan", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Saudi Arabia", "Singapore", "Slovakia", "Slovenia", "South Africa", "South America", "South Korea", "Spain", "Sri Lanka", "Sweden", "Switzerland", "Taiwan", "Thailand", "Trinidad and Tobago", "Turkey", "Turkmenistan", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uzbekistan", "Venezuela", "Vietnam", "World" };
@@ -175,7 +177,7 @@ public class ARTapToPlaceObject : MonoBehaviour
                             else if (hit.transform.name == "Plane.001")
                                 selectMicrowave();
                             footprintValue -= objectFootprint;
-                            text.text = footprintValue.ToString();
+                            text.text = Math.Round(footprintValue,2).ToString();
                         }
                     }
                 }
@@ -225,6 +227,7 @@ public class ARTapToPlaceObject : MonoBehaviour
             if (objectSelected)
             {
                 changes.Push(2);
+                footprintChanges.Push(objectFootprint);
                 objectsChanged.Push(objectSelected);
                 changes.Push(3);
             }
@@ -233,8 +236,9 @@ public class ARTapToPlaceObject : MonoBehaviour
 
             GameObject newObject = Instantiate(objectToPlace, placementPose.position, placementPose.rotation) as GameObject;
             footprintValue += objectFootprint;
-            text.text = footprintValue.ToString();
+            text.text = Math.Round(footprintValue,2).ToString();
             objectsChanged.Push(newObject);
+            footprintChanges.Push(objectFootprint);
             clearRedoStack();
         }
     }
@@ -246,6 +250,7 @@ public class ARTapToPlaceObject : MonoBehaviour
             currentObject.SetActive(false);
             objectsChanged.Push(currentObject);
             changes.Push(0);
+            footprintChanges.Push(objectFootprint);
             clearRedoStack();
             checkPreview = false;   // special! Do not call previewingMode because it will bring back original position of selected object
             objectSelected = null;
@@ -278,19 +283,26 @@ public class ARTapToPlaceObject : MonoBehaviour
         for (int i = 0;i < itemsToPop;i++)
         {
             int lastChange = changes.Pop();
+            double tempFootprint = footprintChanges.Pop();
             if (lastChange % 2 == 1)
             {
                 GameObject currentObject = objectsChanged.Pop();
                 currentObject.SetActive(false);
+                footprintValue -= tempFootprint;
+                
                 undoneObjects.Push(currentObject);
                 undoneChanges.Push(lastChange ^ 1);
+                undoneFootprint.Push(tempFootprint);
             }
             else if (lastChange % 2 == 0)
             {
                 GameObject currentObject = objectsChanged.Pop();
                 currentObject.SetActive(true);
+                footprintValue += tempFootprint;
+
                 undoneObjects.Push(currentObject);
                 undoneChanges.Push(lastChange ^ 1);
+                undoneFootprint.Push(tempFootprint);
             }
         }
     }
@@ -311,19 +323,26 @@ public class ARTapToPlaceObject : MonoBehaviour
         for (int i = 0;i < itemsToPop;i++)
         {
             int lastChange = undoneChanges.Pop();
+            double tempFootprint = undoneFootprint.Pop();
             if (lastChange % 2 == 0)
             {
                 GameObject currentObject = undoneObjects.Pop();
                 currentObject.SetActive(true);
+                footprintValue += tempFootprint;
+
                 objectsChanged.Push(currentObject);
                 changes.Push(lastChange ^ 1);
+                footprintChanges.Push(tempFootprint);
             }
             else if (lastChange % 2 == 1)
             {
                 GameObject currentObject = undoneObjects.Pop();
                 currentObject.SetActive(false);
+                footprintValue -= tempFootprint;
+
                 objectsChanged.Push(currentObject);
                 changes.Push(lastChange ^ 1);
+                footprintChanges.Push(tempFootprint);
             }
         }
     }
@@ -335,6 +354,7 @@ public class ARTapToPlaceObject : MonoBehaviour
             if (undoneChanges.Pop() % 2 == 0)
                 Destroy(undoneObjects.Peek());
             undoneObjects.Pop();
+            undoneFootprint.Pop();
         }
     }
 
@@ -346,7 +366,7 @@ public class ARTapToPlaceObject : MonoBehaviour
             objectSelected.SetActive(true);
             objectSelected = null;
             footprintValue += objectFootprint;
-            text.text = footprintValue.ToString();
+            text.text = Math.Round(footprintValue,2).ToString();
         }
     }
 
@@ -432,5 +452,4 @@ public class ARTapToPlaceObject : MonoBehaviour
     {
         Vibration.VibrateMs(200);
     }
-
 }
