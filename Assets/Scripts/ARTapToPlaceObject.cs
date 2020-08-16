@@ -21,7 +21,6 @@ public class ARTapToPlaceObject : MonoBehaviour
     private GameObject previewing = null;
     private GameObject newObject;
     private GameObject objectSelected;
-    private List<GameObject> objectsPlaced;
     private Vector2 fingerLeft;//swipe detection
     private Vector2 fingerRight;//swipe detection
     public Canvas canvas;
@@ -136,11 +135,6 @@ public class ARTapToPlaceObject : MonoBehaviour
         }
     }
 
-    public void DeleteLastObject()
-    {
-        objectsPlaced.RemoveAt(objectsPlaced.Count - 1);
-    }
-
     public void DeleteObject()
     {
         var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -161,18 +155,29 @@ public class ARTapToPlaceObject : MonoBehaviour
 
     public void undo()
     {
+        if (changes.Count == 0) // empty stack
+            return;
+
         if (changes.Pop() == 1)  // already popped!
         {
             GameObject currentObject = objectsChanged.Pop();
             currentObject.SetActive(false);
+            undoneObjects.Push(currentObject);
+            undoneChanges.Push(0);
         }
     }
 
     public void redo()
     {
-        if (undoneChanges.Pop() == 0)
+        if (undoneChanges.Count == 0) // empty stack
+            return;
+
+        if (undoneChanges.Pop() == 0) // already popped
         {
             GameObject currentObject = undoneObjects.Pop();
+            currentObject.SetActive(true);
+            objectsChanged.Push(currentObject);
+            changes.Push(1);
         }
     }
 
