@@ -12,7 +12,6 @@ public class ARTapToPlaceObject : MonoBehaviour
     private Pose placementPose; //coordinate
     private bool placementPoseIsValid = false;//place holder that change when falt surface detexted
     private bool checkPreview = false;
-    private bool checkIfPLaced = false;
     public GameObject placementIndicator;//indicator of flat floor (a picture)
 /////////list of item that you can select////////
     public GameObject microwave;
@@ -83,11 +82,6 @@ public class ARTapToPlaceObject : MonoBehaviour
             if (touch.phase == TouchPhase.Ended)
             {
                 fingerRight = touch.position;
-                if (placementPoseIsValid && !IsPointerAboveUIObject() && !detectSwipe && checkIfPLaced)
-                {
-                    PlaceObject();
-                    checkIfPLaced = false;
-                }
             }
         }
     }
@@ -190,7 +184,11 @@ public class ARTapToPlaceObject : MonoBehaviour
 
     public void previewModePlacement()
     {
-        checkIfPLaced = true;
+        if (placementPoseIsValid)
+        {
+            PlaceObject();
+            checkPreview = false;
+        }
     }
 
     private bool IsPointerAboveUIObject()
@@ -248,11 +246,4 @@ public class ARTapToPlaceObject : MonoBehaviour
         objectToPlace = grass;
         objectPreview = grass;
     }
-
-    public void selectNone()
-    {
-        objectToPlace = null;
-        objectPreview = null;
-    }
-
 }
