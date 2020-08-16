@@ -52,7 +52,7 @@ public class ARTapToPlaceObject : MonoBehaviour
             countryIndex[countries[i]] = i;
         }
 
-        Debug.LogWarning("Hello");
+        Debug.LogWarning(System.Globalization.RegionInfo.CurrentRegion.EnglishName);
     }
 
     // Update is called once per frame
@@ -129,6 +129,7 @@ public class ARTapToPlaceObject : MonoBehaviour
             GameObject newObject = Instantiate(objectToPlace, placementPose.position, placementPose.rotation) as GameObject;
             objectsChanged.Push(newObject);
             changes.Push(1);
+            clearRedoStack();
         }
     }
 
@@ -143,7 +144,10 @@ public class ARTapToPlaceObject : MonoBehaviour
             if (hit.transform.name == "NaturePack_Grass1" || hit.transform.name == "default"  || hit.transform.name == "Plane.001")
             {
                 Debug.LogWarning("name works");
-                Destroy(hit.transform.gameObject);
+                hit.transform.gameObject.SetActive(false);
+                clearRedoStack();
+
+                //Destroy(hit.transform.gameObject);
                 //objectSelected = hit.transform.gameObject; 
                 //objectSelected.transform.position = new Vector3(transform.position.x, transform.position.y + 100, transform.position.z);
             }
@@ -155,12 +159,19 @@ public class ARTapToPlaceObject : MonoBehaviour
         if (changes.Count == 0) // empty stack
             return;
 
-        if (changes.Pop() == 1)  // already popped!
+        if (changes.Pop() == 1)  // already popped
         {
             GameObject currentObject = objectsChanged.Pop();
             currentObject.SetActive(false);
             undoneObjects.Push(currentObject);
             undoneChanges.Push(0);
+        }
+        else
+        {
+            GameObject currentObject = objectsChanged.Pop();
+            currentObject.SetActive(true);
+            undoneObjects.Push(currentObject);
+            undoneChanges.Push(1);
         }
     }
 
@@ -176,6 +187,18 @@ public class ARTapToPlaceObject : MonoBehaviour
             objectsChanged.Push(currentObject);
             changes.Push(1);
         }
+        else
+        {
+            GameObject currentObject = undoneObjects.Pop();
+            currentObject.SetActive(false);
+            objectsChanged.Push(currentObject);
+            changes.Push(0);
+        }
+    }
+
+    private void clearRedoStack()
+    {
+        return;
     }
 
     public void previewMode()
