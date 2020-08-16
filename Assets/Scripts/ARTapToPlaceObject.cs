@@ -44,6 +44,7 @@ public class ARTapToPlaceObject : MonoBehaviour
     private int cnt = 0;
     private Text text;
     private string userCountry;
+    private double userPerCapita, userEmissionPerEnergy;
     private int footprintValue = 0;
     private int objectFootprint = 0;
 
@@ -99,7 +100,6 @@ public class ARTapToPlaceObject : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        userCountry = System.Globalization.RegionInfo.CurrentRegion.EnglishName;
         rayManager = FindObjectOfType<ARRaycastManager>();
         canvas.enabled = false;
 
@@ -108,7 +108,16 @@ public class ARTapToPlaceObject : MonoBehaviour
         {
             countryIndex[countries[i]] = i;
         }
-        
+
+        // Get user information
+        userCountry = System.Globalization.RegionInfo.CurrentRegion.EnglishName;
+        int userIndex;
+        if (countryIndex.ContainsKey(userCountry))
+            userIndex = countryIndex[userCountry];
+        else
+            userIndex = countries.Length - 1;
+        userPerCapita = perCapita[userIndex];
+        userEmissionPerEnergy = emissionPerEnergy[userIndex];
     }
 
     // Update is called once per frame
