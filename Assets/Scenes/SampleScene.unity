@@ -606,7 +606,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &132789991
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1172,7 +1172,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &479723789
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1745,7 +1745,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &588995912
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1920,7 +1920,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &700823341
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2144,7 +2144,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &717435957
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2414,7 +2414,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &743623162
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2641,7 +2641,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &812610202
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4026,7 +4026,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1148203845
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4314,10 +4314,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9d36fbdd527ae14281603cd2f9f05a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  placementIndicator: {fileID: 1403222929}
-  microwave: {fileID: 1355362438946636277, guid: e9a406aaf2443d04799ea7713560a3e7, type: 3}
-  tree: {fileID: 968970616416513670, guid: 869a92284d923c54f9e3aad7881a7b68, type: 3}
-  grass: {fileID: 6354353466431751027, guid: 33e85d4c36cc9054cb9722c5f1f6365c, type: 3}
   canvas: {fileID: 2107456243}
   animator1: {fileID: 1047526439}
   animator2: {fileID: 93114874}
@@ -4352,7 +4348,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1291280459
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5582,7 +5578,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1676734579
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5831,7 +5827,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1776892486
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6106,7 +6102,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1816902781
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6289,10 +6285,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9d36fbdd527ae14281603cd2f9f05a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  placementIndicator: {fileID: 1403222929}
-  microwave: {fileID: 1355362438946636277, guid: e9a406aaf2443d04799ea7713560a3e7, type: 3}
-  tree: {fileID: 968970616416513670, guid: 869a92284d923c54f9e3aad7881a7b68, type: 3}
-  grass: {fileID: 6354353466431751027, guid: 33e85d4c36cc9054cb9722c5f1f6365c, type: 3}
   canvas: {fileID: 2107456243}
   animator1: {fileID: 1047526439}
   animator2: {fileID: 93114874}
@@ -6604,7 +6596,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2107456241
 MonoBehaviour:
   m_ObjectHideFlags: 0
