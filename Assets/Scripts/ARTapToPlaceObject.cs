@@ -54,6 +54,7 @@ public class ARTapToPlaceObject : MonoBehaviour
     public SimpleScrollSnap ApplianceSelector;
     public SimpleScrollSnap TypeSelector;
 
+    private GameObject Selected = selectionArray[0][0];
     private int PrevType = 0;
     private bool MenuState = false;
 
@@ -519,4 +520,23 @@ public class ARTapToPlaceObject : MonoBehaviour
         }
         PrevType = TypeSelector.CurrentPanel; 
     }
+
+    public void ChangeSelectedItem() => Selected = selectionArray[TypeSelector][(TypeSelector.CurrentPanel == 0) ? (FlowerSelector.CurrentPanel) : ((TypeSelector.CurrentPanel == 1) ? (TreeSelector.CurrentPanel) : (ApplianceSelector.CurrentPanel))];
+
+    /*public void ChangeSelectedItem()
+    {
+        if (TypeSelector.CurrentPanel = 0)
+        {
+            Selected = selectionArrayFlower[FlowerSelector.CurrentPanel];
+        }
+        else if (TypeSelector.CurrentPanel = 1)
+        {
+            Selected = selectionArrayTree[TreeSelector.CurrentPanel];
+        }
+        else if (TypeSelector.CurrentPanel = 2)
+        {
+            Selected = selectionArrayAppliance[ApplianceSelector.CurrentPanel];
+        }
+    }*///Some one is retarded *cough* me *cought*
+
 }
