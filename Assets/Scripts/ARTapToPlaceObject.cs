@@ -102,7 +102,7 @@ public class ARTapToPlaceObject : MonoBehaviour
                         animator4.SetTrigger("RightButton");
                         animator5.SetTrigger("RightButton");
                         animator6.SetTrigger("RightButton");
-                        trashAnimator.SetTrigger("trashFade");
+                        trashAnimator.SetTrigger("trashFadeIn");
 
                         previewMode();
                         if (hit.transform.name == "NaturePack_Grass1")
@@ -187,7 +187,7 @@ public class ARTapToPlaceObject : MonoBehaviour
             animator4.SetTrigger("RightButton");
             animator5.SetTrigger("RightButton");
             animator6.SetTrigger("RightButton");
-            trashAnimator.SetTrigger("trashFade");
+            trashAnimator.SetTrigger("trashFadeOut");
 
             //Destroy(hit.transform.gameObject);
             //objectSelected = hit.transform.gameObject; 
@@ -346,5 +346,10 @@ public class ARTapToPlaceObject : MonoBehaviour
     {
         objectToPlace = grass;
         objectPreview = grass;
+    }
+
+    public void HapticFeedBack()
+    {
+        Handheld.Vibrate();
     }
 }
