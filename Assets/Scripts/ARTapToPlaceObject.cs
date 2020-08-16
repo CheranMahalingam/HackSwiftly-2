@@ -32,6 +32,12 @@ public class ARTapToPlaceObject : MonoBehaviour
     private Stack<int> changes = new Stack<int>();
     private Stack<GameObject> undoneObjects = new Stack<GameObject>();
     private Stack<int> undoneChanges = new Stack<int>();
+    public Animator animator1;
+    public Animator animator2;
+    public Animator animator3;
+    public Animator animator4;
+    public Animator animator5;
+    public Animator animator6;
 
     // Hardcoding researched data
     private string[] countries = { "Africa", "Algeria", "Argentina", "Asia", "Asia (excl. China & India)", "Australia", "Austria", "Azerbaijan", "Bangladesh", "Belarus", "Belgium", "Brazil", "Bulgaria", "Canada", "Chile", "China", "Colombia", "Croatia", "Cyprus", "Czech Republic", "Denmark", "EU-27", "EU-28", "Ecuador", "Egypt", "Estonia", "Europe", "Europe (excl. EU-27)", "Europe (excl. EU-28)", "Finland", "France", "Germany", "Greece", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Japan", "Kazakhstan", "Kuwait", "Latvia", "Lithuania", "Luxembourg", "Macedonia", "Malaysia", "Mexico", "Morocco", "Netherlands", "New Zealand", "North America", "North America (excl. USA)", "Norway", "Oceania", "Oman", "Pakistan", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Saudi Arabia", "Singapore", "Slovakia", "Slovenia", "South Africa", "South America", "South Korea", "Spain", "Sri Lanka", "Sweden", "Switzerland", "Taiwan", "Thailand", "Trinidad and Tobago", "Turkey", "Turkmenistan", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uzbekistan", "Venezuela", "Vietnam", "World" };
@@ -90,6 +96,13 @@ public class ARTapToPlaceObject : MonoBehaviour
                     if (hit.transform.name == "NaturePack_Grass1" || hit.transform.name == "default" || hit.transform.name == "Plane.001")
                     {
                         objectSelected = hit.transform.gameObject;
+                        animator1.SetTrigger("LeftButton");
+                        animator2.SetTrigger("LeftButton");
+                        animator3.SetTrigger("LeftButton");
+                        animator4.SetTrigger("RightButton");
+                        animator5.SetTrigger("RightButton");
+                        animator6.SetTrigger("RightButton");
+                        previewMode();
                     }
                 }
             }
