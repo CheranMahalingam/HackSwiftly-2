@@ -51,7 +51,6 @@ public class ARTapToPlaceObject : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Application.targetFrameRate = 15;
         Debug.LogWarning(System.Globalization.RegionInfo.CurrentRegion.EnglishName);
         rayManager = FindObjectOfType<ARRaycastManager>();
         canvas.enabled = false;
@@ -66,7 +65,6 @@ public class ARTapToPlaceObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.LogWarning("count: " + cnt);
         if (previewing)
         {
             Destroy(previewing);
@@ -93,7 +91,7 @@ public class ARTapToPlaceObject : MonoBehaviour
             {
                 fingerRight = touch.position;
 
-                if (!checkPreview)
+                if (!checkPreview && !IsPointerAboveUIObject())
                 {
                     var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                     RaycastHit hit;
@@ -112,7 +110,6 @@ public class ARTapToPlaceObject : MonoBehaviour
                             trashAnimator.SetTrigger("trashFadeIn");
 
                             checkPreview = true;
-                            cnt++;
                             if (hit.transform.name == "NaturePack_Grass1")
                                 selectGrass();
                             else if (hit.transform.name == "default")
@@ -188,7 +185,6 @@ public class ARTapToPlaceObject : MonoBehaviour
             objectsChanged.Push(currentObject);
             changes.Push(0);
             clearRedoStack();
-            Debug.LogWarning("deleting");
             checkPreview = false;   // special! Do not call previewingMode because it will bring back original position of selected object
             objectSelected = null;
             animator1.SetTrigger("LeftButton");
@@ -282,7 +278,6 @@ public class ARTapToPlaceObject : MonoBehaviour
 
     public void previewMode()   // called when cancelled but not checkmarked
     {
-        Debug.LogError("previewMode");
         checkPreview = !checkPreview;
         if (objectSelected && !checkPreview)
         {
@@ -298,7 +293,6 @@ public class ARTapToPlaceObject : MonoBehaviour
             PlaceObject();
             if (objectSelected)
                 objectSelected = null;
-            Debug.LogWarning("Not supposed to be here");
             checkPreview = false;
         }
     }
