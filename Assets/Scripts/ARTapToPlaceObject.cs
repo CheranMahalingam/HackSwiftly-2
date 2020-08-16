@@ -21,6 +21,7 @@ public class ARTapToPlaceObject : MonoBehaviour
     private GameObject previewing = null;
     private GameObject newObject;
     private GameObject objectSelected;
+    private List<GameObject> objectsPlaced;
     private Vector2 fingerLeft;//swipe detection
     private Vector2 fingerRight;//swipe detection
     public Canvas canvas;
@@ -133,6 +134,11 @@ public class ARTapToPlaceObject : MonoBehaviour
             objectsChanged.Push(newObject);
             changes.Push(1);
         }
+    }
+
+    public void DeleteLastObject()
+    {
+        objectsPlaced.RemoveAt(objectsPlaced.Count - 1);
     }
 
     public void DeleteObject()
