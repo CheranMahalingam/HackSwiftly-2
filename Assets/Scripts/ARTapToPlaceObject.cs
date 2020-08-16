@@ -197,7 +197,12 @@ public class ARTapToPlaceObject : MonoBehaviour
 
     private void clearRedoStack()
     {
-        return;
+        while (undoneChanges.Count > 0)
+        {
+            if (undoneChanges.Pop() == 0)
+                Destroy(undoneObjects.Peek());
+            undoneObjects.Pop();
+        }
     }
 
     public void previewMode()
