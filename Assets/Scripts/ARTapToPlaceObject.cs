@@ -322,6 +322,12 @@ public class ARTapToPlaceObject : MonoBehaviour
 
     public void HapticFeedBack()
     {
-        Handheld.Vibrate();
+        StartCoroutine(VibrateDuration());
+    }
+
+    public IEnumerator VibrateDuration()
+    {
+        yield return new WaitForSeconds(0.2f);
+        Handheld.Vibrate()
     }
 }
