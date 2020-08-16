@@ -523,8 +523,14 @@ public class ARTapToPlaceObject : MonoBehaviour
         PrevType = TypeSelector.CurrentPanel; 
     }
 
-    public void ChangeSelectedItem() => Selected = selectionArray[TypeSelector.CurrentPanel,(TypeSelector.CurrentPanel == 0) ? (FlowerSelector.CurrentPanel) : ((TypeSelector.CurrentPanel == 1) ? (TreeSelector.CurrentPanel) : (ApplianceSelector.CurrentPanel))];
+    public void ChangeSelectedItem()
+    {
+        Selected = selectionArray[TypeSelector.CurrentPanel, (TypeSelector.CurrentPanel == 0) ? (FlowerSelector.CurrentPanel) : ((TypeSelector.CurrentPanel == 1) ? (TreeSelector.CurrentPanel) : (ApplianceSelector.CurrentPanel))];
+        objectFootprint = selectionArrayFootprint[TypeSelector.CurrentPanel, (TypeSelector.CurrentPanel == 0) ? (FlowerSelector.CurrentPanel) : ((TypeSelector.CurrentPanel == 1) ? (TreeSelector.CurrentPanel) : (ApplianceSelector.CurrentPanel))];
+        objectToPlace = Selected;
+        objectPreview = Selected;
 
+    }
     /*public void ChangeSelectedItem()
     {
         if (TypeSelector.CurrentPanel = 0)
