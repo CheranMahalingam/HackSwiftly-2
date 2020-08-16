@@ -42,8 +42,16 @@ public class ARTapToPlaceObject : MonoBehaviour
     public Animator animator6;
     public Animator trashAnimator;
     private int cnt = 0;
+    public Text carbonFootprint;
     private Text text;
-    private string userCountry; 
+    private int footprintValue = 0;
+    private int objectFootprint = 0;
+
+    // Temporary values (NOT ACCURATE)
+    private int microwaveFootprint = 5;
+    private int treeFootprint = -3;
+    private int grassFootprint = -1;
+    private int indoorPlantFootprint = -2;
 
     // Hardcoding researched data
     private string[] countries = { "Africa", "Algeria", "Argentina", "Asia", "Asia (excl. China & India)", "Australia", "Austria", "Azerbaijan", "Bangladesh", "Belarus", "Belgium", "Brazil", "Bulgaria", "Canada", "Chile", "China", "Colombia", "Croatia", "Cyprus", "Czech Republic", "Denmark", "EU-27", "EU-28", "Ecuador", "Egypt", "Estonia", "Europe", "Europe (excl. EU-27)", "Europe (excl. EU-28)", "Finland", "France", "Germany", "Greece", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Japan", "Kazakhstan", "Kuwait", "Latvia", "Lithuania", "Luxembourg", "Macedonia", "Malaysia", "Mexico", "Morocco", "Netherlands", "New Zealand", "North America", "North America (excl. USA)", "Norway", "Oceania", "Oman", "Pakistan", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Saudi Arabia", "Singapore", "Slovakia", "Slovenia", "South Africa", "South America", "South Korea", "Spain", "Sri Lanka", "Sweden", "Switzerland", "Taiwan", "Thailand", "Trinidad and Tobago", "Turkey", "Turkmenistan", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uzbekistan", "Venezuela", "Vietnam", "World" };
@@ -158,6 +166,8 @@ public class ARTapToPlaceObject : MonoBehaviour
                                 selectTree();
                             else if (hit.transform.name == "Plane.001")
                                 selectMicrowave();
+                            footprintValue -= objectFootprint;
+                            text.text = footprintValue.ToString();
                         }
                     }
                 }
@@ -214,7 +224,8 @@ public class ARTapToPlaceObject : MonoBehaviour
                 changes.Push(1);
 
             GameObject newObject = Instantiate(objectToPlace, placementPose.position, placementPose.rotation) as GameObject;
-            text.text = "Text has changed";
+            footprintValue += objectFootprint;
+            text.text = footprintValue.ToString();
             objectsChanged.Push(newObject);
             clearRedoStack();
         }
@@ -328,6 +339,8 @@ public class ARTapToPlaceObject : MonoBehaviour
         {
             objectSelected.SetActive(true);
             objectSelected = null;
+            footprintValue += objectFootprint;
+            text.text = footprintValue.ToString();
         }
     }
 
@@ -385,24 +398,28 @@ public class ARTapToPlaceObject : MonoBehaviour
     {
         objectToPlace = microwave;
         objectPreview = microwave;
+        objectFootprint = microwaveFootprint;
     }
 
     public void selectTree()
     {
         objectToPlace = tree;
         objectPreview = tree;
+        objectFootprint = treeFootprint;
     }
 
     public void selectGrass()
     {
         objectToPlace = grass;
         objectPreview = grass;
+        objectFootprint = grassFootprint;
     }
 
     public void selectIndoorPlant()
     {
         objectToPlace = indoorPlant;
         objectPreview = indoorPlant;
+        objectFootprint = indoorPlantFootprint;
     }
 
     public void HapticFeedBack()
