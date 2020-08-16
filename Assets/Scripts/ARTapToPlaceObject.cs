@@ -162,7 +162,7 @@ public class ARTapToPlaceObject : MonoBehaviour
         if (changes.Pop() == 1)  // already popped!
         {
             GameObject currentObject = objectsChanged.Pop();
-            currentObject.setActive(false);
+            currentObject.SetActive(false);
         }
     }
 
