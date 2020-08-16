@@ -570,7 +570,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: b17abff0592a5ad40b34819b398a2ab1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1136,7 +1136,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 898699848e2d7f2489c0aad61da126e8, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1653,7 +1653,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 0705e02170b0a3b4fabf547b728432c9, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3204,7 +3204,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: Toggle
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 0
       - m_Target: {fileID: 2145562579}
         m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
         m_MethodName: SetTrigger
@@ -3216,7 +3216,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: Toggle
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 0
       - m_Target: {fileID: 1282567578}
         m_TargetAssemblyTypeName: ARTapToPlaceObject, Assembly-CSharp
         m_MethodName: ToggleMainMenu
@@ -3228,7 +3228,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 0
       - m_Target: {fileID: 1378518614}
         m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
         m_MethodName: SetTrigger
@@ -3239,6 +3239,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: Toggle
+          m_BoolArgument: 0
+        m_CallState: 0
+      - m_Target: {fileID: 1282567578}
+        m_TargetAssemblyTypeName: ARTapToPlaceObject, Assembly-CSharp
+        m_MethodName: AnimateMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &921579322
@@ -3834,7 +3846,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: Toggle
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 0
       - m_Target: {fileID: 1405412676}
         m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
         m_MethodName: SetTrigger
@@ -3846,7 +3858,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: Toggle
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 0
       - m_Target: {fileID: 1282567578}
         m_TargetAssemblyTypeName: ARTapToPlaceObject, Assembly-CSharp
         m_MethodName: ToggleMainMenu
@@ -3858,7 +3870,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 0
       - m_Target: {fileID: 1378518614}
         m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
         m_MethodName: SetTrigger
@@ -3869,6 +3881,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: Toggle
+          m_BoolArgument: 0
+        m_CallState: 0
+      - m_Target: {fileID: 1282567578}
+        m_TargetAssemblyTypeName: ARTapToPlaceObject, Assembly-CSharp
+        m_MethodName: AnimateMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1047526441
@@ -4326,6 +4350,8 @@ MonoBehaviour:
   FlowerSelectorAnimator: {fileID: 2122824904}
   ApplianceSelectorAnimator: {fileID: 510775144}
   TypeSelectorAnimator: {fileID: 2145562579}
+  TypeSelectorCircle: {fileID: 1405412676}
+  SelectorCircle: {fileID: 1378518614}
   TreeSelector: {fileID: 731930580}
   FlowerSelector: {fileID: 2122824902}
   ApplianceSelector: {fileID: 510775142}
@@ -6297,6 +6323,8 @@ MonoBehaviour:
   FlowerSelectorAnimator: {fileID: 2122824904}
   ApplianceSelectorAnimator: {fileID: 510775144}
   TypeSelectorAnimator: {fileID: 2145562579}
+  TypeSelectorCircle: {fileID: 0}
+  SelectorCircle: {fileID: 0}
   TreeSelector: {fileID: 731930580}
   FlowerSelector: {fileID: 2122824902}
   ApplianceSelector: {fileID: 510775142}

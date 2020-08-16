@@ -284,6 +284,7 @@ public class ARTapToPlaceObject : MonoBehaviour
             animator5.SetTrigger("RightButton");
             animator6.SetTrigger("RightButton");
             trashAnimator.SetTrigger("trashFadeOut");
+            notSelect = true;
         }
     }
 
@@ -555,10 +556,10 @@ public class ARTapToPlaceObject : MonoBehaviour
     {
         if (notSelect)
         {
-            TypeSelectorAnimator.SetTrigger("Trigger");
+            TypeSelectorAnimator.SetTrigger("Toggle");
             ToggleMainMenu();
-            TypeSelectorCircle.SetTrigger("Trigger");
-            SelectorCircle.SetTrigger("Trigger");
+            TypeSelectorCircle.SetTrigger("Toggle");
+            SelectorCircle.SetTrigger("Toggle");
         }
         notSelect = true;
     }
