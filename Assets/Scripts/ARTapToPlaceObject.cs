@@ -11,6 +11,7 @@ public class ARTapToPlaceObject : MonoBehaviour
     private ARRaycastManager rayManager; // controller
     private Pose placementPose; //coordinate
     private bool placementPoseIsValid = false;//place holder that change when falt surface detexted
+    private bool checkPreview = false;
     public GameObject placementIndicator;//indicator of flat floor (a picture)
 /////////list of item that you can select////////
     public GameObject microwave;
@@ -81,12 +82,7 @@ public class ARTapToPlaceObject : MonoBehaviour
             if (touch.phase == TouchPhase.Ended)
             {
                 fingerRight = touch.position;
-                if (placementPoseIsValid && !IsPointerAboveUIObject() && !detectSwipe)
-                {
-                    PlaceObject();
-                }
             }
-
         }
     }
 
@@ -112,7 +108,7 @@ public class ARTapToPlaceObject : MonoBehaviour
         {
             placementIndicator.SetActive(true);
             placementIndicator.transform.SetPositionAndRotation(placementPose.position, placementPose.rotation);
-            if (objectPreview)
+            if (objectPreview && checkPreview)
             {
                 //objectPreview.SetActive(true);
                 //objectPreview.transform.SetPositionAndRotation(placementPose.position, placementPose.rotation);
@@ -204,6 +200,20 @@ public class ARTapToPlaceObject : MonoBehaviour
         return;
     }
 
+    public void previewMode()
+    {
+        checkPreview = !checkPreview;
+    }
+
+    public void previewModePlacement()
+    {
+        if (placementPoseIsValid)
+        {
+            PlaceObject();
+            checkPreview = false;
+        }
+    }
+
     private bool IsPointerAboveUIObject()
     {
         PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
@@ -259,11 +269,4 @@ public class ARTapToPlaceObject : MonoBehaviour
         objectToPlace = grass;
         objectPreview = grass;
     }
-
-    public void selectNone()
-    {
-        objectToPlace = null;
-        objectPreview = null;
-    }
-
 }
