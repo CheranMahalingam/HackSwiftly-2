@@ -163,22 +163,24 @@ public class ARTapToPlaceObject : MonoBehaviour
 
     public void DeleteObject()
     {
-        var ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, Mathf.Infinity));
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit))
-        {
-            if (hit.transform.name == "NaturePack_Grass1" || hit.transform.name == "default"  || hit.transform.name == "Plane.001")
-            {
-                GameObject currentObject = hit.transform.gameObject;
-                currentObject.SetActive(false);
-                objectsChanged.Push(currentObject);
-                changes.Push(0);
-                clearRedoStack();
+        if (objectSelected) {
+            GameObject currentObject = objectSelected;
+            currentObject.SetActive(false);
+            objectsChanged.Push(currentObject);
+            changes.Push(0);
+            clearRedoStack();
+            checkPreview = !checkPreview;   // special! Do not call previewingMode because it will bring back original position of selected object
+            objectSelected = null;
+            animator1.SetTrigger("LeftButton");
+            animator2.SetTrigger("LeftButton");
+            animator3.SetTrigger("LeftButton");
+            animator4.SetTrigger("RightButton");
+            animator5.SetTrigger("RightButton");
+            animator6.SetTrigger("RightButton");
 
-                //Destroy(hit.transform.gameObject);
-                //objectSelected = hit.transform.gameObject; 
-                //objectSelected.transform.position = new Vector3(transform.position.x, transform.position.y + 100, transform.position.z);
-            }
+            //Destroy(hit.transform.gameObject);
+            //objectSelected = hit.transform.gameObject; 
+            //objectSelected.transform.position = new Vector3(transform.position.x, transform.position.y + 100, transform.position.z);
         }
     }
 
