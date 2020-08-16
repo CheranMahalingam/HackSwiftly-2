@@ -40,6 +40,7 @@ public class ARTapToPlaceObject : MonoBehaviour
     public Animator animator5;
     public Animator animator6;
     public Animator trashAnimator;
+    private int cnt = 0;
 
     // Hardcoding researched data
     private string[] countries = { "Africa", "Algeria", "Argentina", "Asia", "Asia (excl. China & India)", "Australia", "Austria", "Azerbaijan", "Bangladesh", "Belarus", "Belgium", "Brazil", "Bulgaria", "Canada", "Chile", "China", "Colombia", "Croatia", "Cyprus", "Czech Republic", "Denmark", "EU-27", "EU-28", "Ecuador", "Egypt", "Estonia", "Europe", "Europe (excl. EU-27)", "Europe (excl. EU-28)", "Finland", "France", "Germany", "Greece", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Japan", "Kazakhstan", "Kuwait", "Latvia", "Lithuania", "Luxembourg", "Macedonia", "Malaysia", "Mexico", "Morocco", "Netherlands", "New Zealand", "North America", "North America (excl. USA)", "Norway", "Oceania", "Oman", "Pakistan", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Saudi Arabia", "Singapore", "Slovakia", "Slovenia", "South Africa", "South America", "South Korea", "Spain", "Sri Lanka", "Sweden", "Switzerland", "Taiwan", "Thailand", "Trinidad and Tobago", "Turkey", "Turkmenistan", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uzbekistan", "Venezuela", "Vietnam", "World" };
@@ -64,7 +65,7 @@ public class ARTapToPlaceObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(checkPreview);
+        Debug.LogWarning("count: " + cnt);
         if (previewing)
         {
             Destroy(previewing);
@@ -74,8 +75,6 @@ public class ARTapToPlaceObject : MonoBehaviour
 
         foreach (Touch touch in Input.touches)
         {
-            Debug.LogWarning("logged");
-            Debug.LogWarning("checkPreview: " + checkPreview);
             if (touch.phase == TouchPhase.Began)
             {
                 detectSwipe = false;
@@ -112,6 +111,7 @@ public class ARTapToPlaceObject : MonoBehaviour
                             trashAnimator.SetTrigger("trashFadeIn");
 
                             checkPreview = true;
+                            cnt++;
                             if (hit.transform.name == "NaturePack_Grass1")
                                 selectGrass();
                             else if (hit.transform.name == "default")
@@ -282,7 +282,6 @@ public class ARTapToPlaceObject : MonoBehaviour
 
     public void previewMode()   // called when cancelled but not checkmarked
     {
-        Debug.LogWarning("previewMode");
         checkPreview = !checkPreview;
         if (objectSelected && !checkPreview)
         {
