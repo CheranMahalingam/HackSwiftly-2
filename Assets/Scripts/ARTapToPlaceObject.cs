@@ -319,4 +319,9 @@ public class ARTapToPlaceObject : MonoBehaviour
         objectToPlace = grass;
         objectPreview = grass;
     }
+
+    public void HapticFeedBack()
+    {
+        Handheld.Vibrate();
+    }
 }
