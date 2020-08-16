@@ -1893,6 +1893,12 @@ MonoBehaviour:
   tree: {fileID: 968970616416513670, guid: 869a92284d923c54f9e3aad7881a7b68, type: 3}
   grass: {fileID: 6354353466431751027, guid: 33e85d4c36cc9054cb9722c5f1f6365c, type: 3}
   canvas: {fileID: 2107456243}
+  animator1: {fileID: 1047526439}
+  animator2: {fileID: 93114874}
+  animator3: {fileID: 929361043}
+  animator4: {fileID: 921579320}
+  animator5: {fileID: 796161519}
+  animator6: {fileID: 975063311}
 --- !u!1 &1403222929
 GameObject:
   m_ObjectHideFlags: 0
@@ -2715,6 +2721,12 @@ MonoBehaviour:
   tree: {fileID: 968970616416513670, guid: 869a92284d923c54f9e3aad7881a7b68, type: 3}
   grass: {fileID: 6354353466431751027, guid: 33e85d4c36cc9054cb9722c5f1f6365c, type: 3}
   canvas: {fileID: 2107456243}
+  animator1: {fileID: 0}
+  animator2: {fileID: 0}
+  animator3: {fileID: 0}
+  animator4: {fileID: 0}
+  animator5: {fileID: 0}
+  animator6: {fileID: 0}
 --- !u!4 &1871631129
 Transform:
   m_ObjectHideFlags: 0
