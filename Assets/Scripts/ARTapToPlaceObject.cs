@@ -42,6 +42,7 @@ public class ARTapToPlaceObject : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Debug.LogWarning(System.Globalization.RegionInfo.CurrentRegion.EnglishName);
         rayManager = FindObjectOfType<ARRaycastManager>();
         canvas.enabled = false;
 
