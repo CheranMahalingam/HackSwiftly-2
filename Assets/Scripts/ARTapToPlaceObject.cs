@@ -536,6 +536,16 @@ public class ARTapToPlaceObject : MonoBehaviour
         objectPreview = Selected;
 
     }
+
+    public void FirstSelect()
+    {
+        if (animator1.GetCurrentAnimatorStateInfo(0).IsName("left-button-to-center"))
+        {
+            ChangeSelectedItem();
+
+        }
+    }
+
     /*public void ChangeSelectedItem()
     {
         if (TypeSelector.CurrentPanel = 0)
