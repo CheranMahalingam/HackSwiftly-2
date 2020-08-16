@@ -11,7 +11,7 @@ public class ARTapToPlaceObject : MonoBehaviour
     private ARRaycastManager rayManager; // controller
     private Pose placementPose; //coordinate
     private bool placementPoseIsValid = false;//place holder that change when falt surface detexted
-    private bool checkPreview = false;
+    private bool checkPreview;
     public GameObject placementIndicator;//indicator of flat floor (a picture)
 /////////list of item that you can select////////
     public GameObject microwave;
@@ -72,6 +72,8 @@ public class ARTapToPlaceObject : MonoBehaviour
 
         foreach (Touch touch in Input.touches)
         {
+            Debug.LogWarning("logged");
+            Debug.LogWarning("checkPreview: " + checkPreview);
             if (touch.phase == TouchPhase.Began)
             {
                 detectSwipe = false;
@@ -88,29 +90,33 @@ public class ARTapToPlaceObject : MonoBehaviour
             if (touch.phase == TouchPhase.Ended)
             {
                 fingerRight = touch.position;
-                var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
-                if (Physics.Raycast(ray, out hit))
-                {
-                    if (hit.transform.name == "NaturePack_Grass1" || hit.transform.name == "default" || hit.transform.name == "Plane.001")
-                    {
-                        objectSelected = hit.transform.gameObject;
-                        objectSelected.SetActive(false);
-                        animator1.SetTrigger("LeftButton");
-                        animator2.SetTrigger("LeftButton");
-                        animator3.SetTrigger("LeftButton");
-                        animator4.SetTrigger("RightButton");
-                        animator5.SetTrigger("RightButton");
-                        animator6.SetTrigger("RightButton");
-                        trashAnimator.SetTrigger("trashFadeIn");
 
-                        previewMode();
-                        if (hit.transform.name == "NaturePack_Grass1")
-                            selectGrass();
-                        else if (hit.transform.name == "default")
-                            selectTree();
-                        else if (hit.transform.name == "Plane.001")
-                            selectMicrowave();
+                if (!checkPreview)
+                {
+                    var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                    RaycastHit hit;
+                    if (Physics.Raycast(ray, out hit))
+                    {
+                        if (hit.transform.name == "NaturePack_Grass1" || hit.transform.name == "default" || hit.transform.name == "Plane.001")
+                        {
+                            objectSelected = hit.transform.gameObject;
+                            objectSelected.SetActive(false);
+                            animator1.SetTrigger("LeftButton");
+                            animator2.SetTrigger("LeftButton");
+                            animator3.SetTrigger("LeftButton");
+                            animator4.SetTrigger("RightButton");
+                            animator5.SetTrigger("RightButton");
+                            animator6.SetTrigger("RightButton");
+                            trashAnimator.SetTrigger("trashFadeIn");
+
+                            checkPreview = true;
+                            if (hit.transform.name == "NaturePack_Grass1")
+                                selectGrass();
+                            else if (hit.transform.name == "default")
+                                selectTree();
+                            else if (hit.transform.name == "Plane.001")
+                                selectMicrowave();
+                        }
                     }
                 }
             }
@@ -179,7 +185,8 @@ public class ARTapToPlaceObject : MonoBehaviour
             objectsChanged.Push(currentObject);
             changes.Push(0);
             clearRedoStack();
-            checkPreview = !checkPreview;   // special! Do not call previewingMode because it will bring back original position of selected object
+            Debug.LogWarning("deleting");
+            checkPreview = false;   // special! Do not call previewingMode because it will bring back original position of selected object
             objectSelected = null;
             animator1.SetTrigger("LeftButton");
             animator2.SetTrigger("LeftButton");
@@ -273,6 +280,7 @@ public class ARTapToPlaceObject : MonoBehaviour
 
     public void previewMode()   // called when cancelled but not checkmarked
     {
+        Debug.LogWarning("previewMode");
         checkPreview = !checkPreview;
         if (objectSelected && !checkPreview)
         {
@@ -281,13 +289,14 @@ public class ARTapToPlaceObject : MonoBehaviour
         }
     }
 
-    public void previewModePlacement()
+    public void previewModePlacement()  // called when checkmarked
     {
         if (placementPoseIsValid)
         {
             PlaceObject();
             if (objectSelected)
                 objectSelected = null;
+            Debug.LogWarning("Not supposed to be here");
             checkPreview = false;
         }
     }
