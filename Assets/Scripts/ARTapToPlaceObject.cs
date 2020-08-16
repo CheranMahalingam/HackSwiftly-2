@@ -289,8 +289,10 @@ public class ARTapToPlaceObject : MonoBehaviour
             {
                 GameObject currentObject = objectsChanged.Pop();
                 currentObject.SetActive(false);
+                Debug.LogWarning("tempfootprint: " + tempFootprint);
                 footprintValue -= tempFootprint;
-                
+                text.text = Math.Round(footprintValue, 2).ToString();
+
                 undoneObjects.Push(currentObject);
                 undoneChanges.Push(lastChange ^ 1);
                 undoneFootprint.Push(tempFootprint);
@@ -300,6 +302,7 @@ public class ARTapToPlaceObject : MonoBehaviour
                 GameObject currentObject = objectsChanged.Pop();
                 currentObject.SetActive(true);
                 footprintValue += tempFootprint;
+                text.text = Math.Round(footprintValue, 2).ToString();
 
                 undoneObjects.Push(currentObject);
                 undoneChanges.Push(lastChange ^ 1);
@@ -330,6 +333,7 @@ public class ARTapToPlaceObject : MonoBehaviour
                 GameObject currentObject = undoneObjects.Pop();
                 currentObject.SetActive(true);
                 footprintValue += tempFootprint;
+                text.text = Math.Round(footprintValue, 2).ToString();
 
                 objectsChanged.Push(currentObject);
                 changes.Push(lastChange ^ 1);
@@ -340,6 +344,7 @@ public class ARTapToPlaceObject : MonoBehaviour
                 GameObject currentObject = undoneObjects.Pop();
                 currentObject.SetActive(false);
                 footprintValue -= tempFootprint;
+                text.text = Math.Round(footprintValue, 2).ToString();
 
                 objectsChanged.Push(currentObject);
                 changes.Push(lastChange ^ 1);
