@@ -51,7 +51,7 @@ public class ARTapToPlaceObject : MonoBehaviour
     private double objectFootprint = 0;
 
     // Temporary values (NOT ACCURATE)
-    private double microwaveFootprint = 5.5;
+    private double microwaveFootprint = 1.2 * 365 / 48000;
     private double treeFootprint = -3.1;
     private double grassFootprint = -1.2;
     private double indoorPlantFootprint = -1.8;
@@ -265,9 +265,6 @@ public class ARTapToPlaceObject : MonoBehaviour
             animator5.SetTrigger("RightButton");
             animator6.SetTrigger("RightButton");
             trashAnimator.SetTrigger("trashFadeOut");
-            //Destroy(hit.transform.gameObject);
-            //objectSelected = hit.transform.gameObject; 
-            //objectSelected.transform.position = new Vector3(transform.position.x, transform.position.y + 100, transform.position.z);
         }
     }
 
@@ -391,7 +388,6 @@ public class ARTapToPlaceObject : MonoBehaviour
         eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
         List<RaycastResult> results = new List<RaycastResult>();
         EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
-        Debug.LogWarning("Pointer");
         return results.Count > 0;
     }
 
@@ -428,28 +424,28 @@ public class ARTapToPlaceObject : MonoBehaviour
     {
         objectToPlace = microwave;
         objectPreview = microwave;
-        objectFootprint = microwaveFootprint;
+        objectFootprint = microwaveFootprint * userEmissionPerEnergy;
     }
 
     public void selectTree()
     {
         objectToPlace = tree;
         objectPreview = tree;
-        objectFootprint = treeFootprint;
+        objectFootprint = treeFootprint * userEmissionPerEnergy;
     }
 
     public void selectGrass()
     {
         objectToPlace = grass;
         objectPreview = grass;
-        objectFootprint = grassFootprint;
+        objectFootprint = grassFootprint * userEmissionPerEnergy;
     }
 
     public void selectIndoorPlant()
     {
         objectToPlace = indoorPlant;
         objectPreview = indoorPlant;
-        objectFootprint = indoorPlantFootprint;
+        objectFootprint = indoorPlantFootprint * userEmissionPerEnergy;
     }
 
     public void HapticFeedBack()
