@@ -42,7 +42,6 @@ public class ARTapToPlaceObject : MonoBehaviour
     public Animator animator6;
     public Animator trashAnimator;
     private int cnt = 0;
-    public Text carbonFootprint;
     private Text text;
     private int footprintValue = 0;
     private int objectFootprint = 0;
@@ -52,6 +51,7 @@ public class ARTapToPlaceObject : MonoBehaviour
     private int treeFootprint = -3;
     private int grassFootprint = -1;
     private int indoorPlantFootprint = -2;
+    private string userCountry;
 
     // Hardcoding researched data
     private string[] countries = { "Africa", "Algeria", "Argentina", "Asia", "Asia (excl. China & India)", "Australia", "Austria", "Azerbaijan", "Bangladesh", "Belarus", "Belgium", "Brazil", "Bulgaria", "Canada", "Chile", "China", "Colombia", "Croatia", "Cyprus", "Czech Republic", "Denmark", "EU-27", "EU-28", "Ecuador", "Egypt", "Estonia", "Europe", "Europe (excl. EU-27)", "Europe (excl. EU-28)", "Finland", "France", "Germany", "Greece", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Japan", "Kazakhstan", "Kuwait", "Latvia", "Lithuania", "Luxembourg", "Macedonia", "Malaysia", "Mexico", "Morocco", "Netherlands", "New Zealand", "North America", "North America (excl. USA)", "Norway", "Oceania", "Oman", "Pakistan", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Saudi Arabia", "Singapore", "Slovakia", "Slovenia", "South Africa", "South America", "South Korea", "Spain", "Sri Lanka", "Sweden", "Switzerland", "Taiwan", "Thailand", "Trinidad and Tobago", "Turkey", "Turkmenistan", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uzbekistan", "Venezuela", "Vietnam", "World" };
@@ -91,7 +91,7 @@ public class ARTapToPlaceObject : MonoBehaviour
         // Provide Text position and size using RectTransform.
         RectTransform rectTransform;
         rectTransform = text.GetComponent<RectTransform>();
-        rectTransform.localPosition = new Vector3(0, 0, 0);
+        rectTransform.localPosition = new Vector3(400, 400, 0);
         rectTransform.sizeDelta = new Vector2(600, 200);
     }
 
@@ -267,8 +267,6 @@ public class ARTapToPlaceObject : MonoBehaviour
         else
             itemsToPop = 1;
 
-        text.text = "cool";
-
         for (int i = 0;i < itemsToPop;i++)
         {
             int lastChange = changes.Pop();
@@ -361,7 +359,6 @@ public class ARTapToPlaceObject : MonoBehaviour
         eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
         List<RaycastResult> results = new List<RaycastResult>();
         EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
-        Debug.LogWarning("Pointer");
         return results.Count > 0;
     }
 
