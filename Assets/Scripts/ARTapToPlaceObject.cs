@@ -356,6 +356,6 @@ public class ARTapToPlaceObject : MonoBehaviour
     public IEnumerator VibrateDuration()
     {
         yield return new WaitForSeconds(0.2f);
-        Handheld.Vibrate()
+        Handheld.Vibrate();
     }
 }
