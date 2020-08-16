@@ -94,6 +94,7 @@ public class ARTapToPlaceObject : MonoBehaviour
                     if (hit.transform.name == "NaturePack_Grass1" || hit.transform.name == "default" || hit.transform.name == "Plane.001")
                     {
                         objectSelected = hit.transform.gameObject;
+                        objectSelected.SetActive(false);
                         animator1.SetTrigger("LeftButton");
                         animator2.SetTrigger("LeftButton");
                         animator3.SetTrigger("LeftButton");
@@ -236,6 +237,11 @@ public class ARTapToPlaceObject : MonoBehaviour
     public void previewMode()
     {
         checkPreview = !checkPreview;
+        if (objectSelected && !checkPreview)
+        {
+            objectSelected.SetActive(true);
+            objectSelected = null;
+        }
     }
 
     public void previewModePlacement()
