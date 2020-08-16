@@ -133,7 +133,7 @@ public class ARTapToPlaceObject : MonoBehaviour
 
     public void DeleteObject()
     {
-        var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        var ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, Mathf.Infinity));
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit))
         {
@@ -142,7 +142,6 @@ public class ARTapToPlaceObject : MonoBehaviour
             if (hit.transform.name == "NaturePack_Grass1" || hit.transform.name == "default"  || hit.transform.name == "Plane.001")
             {
                 Debug.LogWarning("name works");
-
                 GameObject currentObject = hit.transform.gameObject;
                 currentObject.SetActive(false);
                 objectsChanged.Push(currentObject);
