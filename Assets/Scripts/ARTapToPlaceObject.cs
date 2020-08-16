@@ -54,7 +54,7 @@ public class ARTapToPlaceObject : MonoBehaviour
     public SimpleScrollSnap ApplianceSelector;
     public SimpleScrollSnap TypeSelector;
 
-    private GameObject Selected = selectionArray[0,0];
+    private GameObject Selected = selectionArray[0, 0];
     private int PrevType = 0;
     private bool MenuState = false;
 
