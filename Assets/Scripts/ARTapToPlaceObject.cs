@@ -85,8 +85,6 @@ public class ARTapToPlaceObject : MonoBehaviour
                 RaycastHit hit;
                 if (Physics.Raycast(ray, out hit))
                 {
-                    Debug.LogWarning("Raycast works");
-                    Debug.LogWarning(hit.transform.name);
                     if (hit.transform.name == "NaturePack_Grass1" || hit.transform.name == "default" || hit.transform.name == "Plane.001")
                     {
                         objectSelected = hit.transform.gameObject;
@@ -148,11 +146,8 @@ public class ARTapToPlaceObject : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit))
         {
-            Debug.LogWarning("Raycast works");
-            Debug.LogWarning(hit.transform.name);
             if (hit.transform.name == "NaturePack_Grass1" || hit.transform.name == "default"  || hit.transform.name == "Plane.001")
             {
-                Debug.LogWarning("name works");
                 GameObject currentObject = hit.transform.gameObject;
                 currentObject.SetActive(false);
                 objectsChanged.Push(currentObject);
