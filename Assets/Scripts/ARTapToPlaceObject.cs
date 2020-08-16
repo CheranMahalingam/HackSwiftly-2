@@ -94,7 +94,7 @@ public class ARTapToPlaceObject : MonoBehaviour
         // Provide Text position and size using RectTransform.
         RectTransform rectTransform;
         rectTransform = text.GetComponent<RectTransform>();
-        rectTransform.localPosition = new Vector3(-400, -600, 0);
+        rectTransform.localPosition = new Vector3(0, 0, 0);
         rectTransform.sizeDelta = new Vector2(600, 200);
     }
 
@@ -161,7 +161,7 @@ public class ARTapToPlaceObject : MonoBehaviour
                     RaycastHit hit;
                     if (Physics.Raycast(ray, out hit))
                     {
-                        if (hit.transform.name == "NaturePack_Grass1" || hit.transform.name == "default" || hit.transform.name == "Plane.001")
+                        if (hit.transform.name == "NaturePack_Grass1" || hit.transform.name == "default" || hit.transform.name == "Plane.001" || hit.transform.name == "01Alocasia_fbx")
                         {
                             objectSelected = hit.transform.gameObject;
                             objectSelected.SetActive(false);
@@ -180,8 +180,10 @@ public class ARTapToPlaceObject : MonoBehaviour
                                 selectTree();
                             else if (hit.transform.name == "Plane.001")
                                 selectMicrowave();
+                            else if (hit.transform.name == "01Alocasia_fbx")
+                                selectIndoorPlant();
                             footprintValue -= objectFootprint;
-                            text.text = Math.Round(footprintValue,2).ToString();
+                            text.text = Math.Round(footprintValue, 3).ToString();
                         }
                     }
                 }
@@ -240,7 +242,7 @@ public class ARTapToPlaceObject : MonoBehaviour
 
             GameObject newObject = Instantiate(objectToPlace, placementPose.position, placementPose.rotation) as GameObject;
             footprintValue += objectFootprint;
-            text.text = Math.Round(footprintValue,2).ToString();
+            text.text = Math.Round(footprintValue, 3).ToString() + " kg of CO\x2082";
             objectsChanged.Push(newObject);
             footprintChanges.Push(objectFootprint);
             clearRedoStack();
@@ -291,7 +293,7 @@ public class ARTapToPlaceObject : MonoBehaviour
                 currentObject.SetActive(false);
                 Debug.LogWarning("tempfootprint: " + tempFootprint);
                 footprintValue -= tempFootprint;
-                text.text = Math.Round(footprintValue, 2).ToString();
+                text.text = Math.Round(footprintValue, 3).ToString() + " kg of CO\x2082";
 
                 undoneObjects.Push(currentObject);
                 undoneChanges.Push(lastChange ^ 1);
@@ -302,7 +304,7 @@ public class ARTapToPlaceObject : MonoBehaviour
                 GameObject currentObject = objectsChanged.Pop();
                 currentObject.SetActive(true);
                 footprintValue += tempFootprint;
-                text.text = Math.Round(footprintValue, 2).ToString();
+                text.text = Math.Round(footprintValue, 3).ToString() + " kg of CO\x2082";
 
                 undoneObjects.Push(currentObject);
                 undoneChanges.Push(lastChange ^ 1);
@@ -333,7 +335,7 @@ public class ARTapToPlaceObject : MonoBehaviour
                 GameObject currentObject = undoneObjects.Pop();
                 currentObject.SetActive(true);
                 footprintValue += tempFootprint;
-                text.text = Math.Round(footprintValue, 2).ToString();
+                text.text = Math.Round(footprintValue, 3).ToString() + " kg of CO\x2082";
 
                 objectsChanged.Push(currentObject);
                 changes.Push(lastChange ^ 1);
@@ -344,7 +346,7 @@ public class ARTapToPlaceObject : MonoBehaviour
                 GameObject currentObject = undoneObjects.Pop();
                 currentObject.SetActive(false);
                 footprintValue -= tempFootprint;
-                text.text = Math.Round(footprintValue, 2).ToString();
+                text.text = Math.Round(footprintValue, 3).ToString() + " kg of CO\x2082";
 
                 objectsChanged.Push(currentObject);
                 changes.Push(lastChange ^ 1);
@@ -372,7 +374,7 @@ public class ARTapToPlaceObject : MonoBehaviour
             objectSelected.SetActive(true);
             objectSelected = null;
             footprintValue += objectFootprint;
-            text.text = Math.Round(footprintValue,2).ToString();
+            text.text = Math.Round(footprintValue, 3).ToString() + " kg of CO\x2082";
         }
     }
 
@@ -436,21 +438,21 @@ public class ARTapToPlaceObject : MonoBehaviour
     {
         objectToPlace = tree;
         objectPreview = tree;
-        objectFootprint = treeFootprint * userEmissionPerEnergy;
+        objectFootprint = 42;
     }
 
     public void selectGrass()
     {
         objectToPlace = grass;
         objectPreview = grass;
-        objectFootprint = grassFootprint * userEmissionPerEnergy;
+        objectFootprint = 0.099;
     }
 
     public void selectIndoorPlant()
     {
         objectToPlace = indoorPlant;
         objectPreview = indoorPlant;
-        objectFootprint = indoorPlantFootprint * userEmissionPerEnergy;
+        objectFootprint = 5;
     }
 
     public void HapticFeedBack()
