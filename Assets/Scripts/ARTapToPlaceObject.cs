@@ -108,7 +108,6 @@ public class ARTapToPlaceObject : MonoBehaviour
         {
             countryIndex[countries[i]] = i;
         }
-
         
     }
 
