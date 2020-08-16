@@ -1899,6 +1899,7 @@ MonoBehaviour:
   animator4: {fileID: 921579320}
   animator5: {fileID: 796161519}
   animator6: {fileID: 975063311}
+  trashAnimator: {fileID: 1601181283}
 --- !u!1 &1403222929
 GameObject:
   m_ObjectHideFlags: 0
@@ -2727,6 +2728,7 @@ MonoBehaviour:
   animator4: {fileID: 0}
   animator5: {fileID: 0}
   animator6: {fileID: 0}
+  trashAnimator: {fileID: 0}
 --- !u!4 &1871631129
 Transform:
   m_ObjectHideFlags: 0

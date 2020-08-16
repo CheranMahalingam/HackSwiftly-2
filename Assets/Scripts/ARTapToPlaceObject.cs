@@ -38,6 +38,7 @@ public class ARTapToPlaceObject : MonoBehaviour
     public Animator animator4;
     public Animator animator5;
     public Animator animator6;
+    public Animator trashAnimator;
 
     // Hardcoding researched data
     private string[] countries = { "Africa", "Algeria", "Argentina", "Asia", "Asia (excl. China & India)", "Australia", "Austria", "Azerbaijan", "Bangladesh", "Belarus", "Belgium", "Brazil", "Bulgaria", "Canada", "Chile", "China", "Colombia", "Croatia", "Cyprus", "Czech Republic", "Denmark", "EU-27", "EU-28", "Ecuador", "Egypt", "Estonia", "Europe", "Europe (excl. EU-27)", "Europe (excl. EU-28)", "Finland", "France", "Germany", "Greece", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Japan", "Kazakhstan", "Kuwait", "Latvia", "Lithuania", "Luxembourg", "Macedonia", "Malaysia", "Mexico", "Morocco", "Netherlands", "New Zealand", "North America", "North America (excl. USA)", "Norway", "Oceania", "Oman", "Pakistan", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Saudi Arabia", "Singapore", "Slovakia", "Slovenia", "South Africa", "South America", "South Korea", "Spain", "Sri Lanka", "Sweden", "Switzerland", "Taiwan", "Thailand", "Trinidad and Tobago", "Turkey", "Turkmenistan", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uzbekistan", "Venezuela", "Vietnam", "World" };
@@ -101,6 +102,7 @@ public class ARTapToPlaceObject : MonoBehaviour
                         animator4.SetTrigger("RightButton");
                         animator5.SetTrigger("RightButton");
                         animator6.SetTrigger("RightButton");
+                        trashAnimator.SetTrigger("trashFade");
 
                         previewMode();
                         if (hit.transform.name == "NaturePack_Grass1")
@@ -163,38 +165,44 @@ public class ARTapToPlaceObject : MonoBehaviour
 
     public void DeleteObject()
     {
-        var ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, Mathf.Infinity));
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit))
-        {
-            if (hit.transform.name == "NaturePack_Grass1" || hit.transform.name == "default"  || hit.transform.name == "Plane.001")
-            {
-                GameObject currentObject = hit.transform.gameObject;
-                currentObject.SetActive(false);
-                objectsChanged.Push(currentObject);
-                changes.Push(0);
-                clearRedoStack();
+        if (objectSelected) {
+            GameObject currentObject = objectSelected;
+            currentObject.SetActive(false);
+            objectsChanged.Push(currentObject);
+            changes.Push(0);
+            clearRedoStack();
+            checkPreview = !checkPreview;   // special! Do not call previewingMode because it will bring back original position of selected object
+            objectSelected = null;
+            animator1.SetTrigger("LeftButton");
+            animator2.SetTrigger("LeftButton");
+            animator3.SetTrigger("LeftButton");
+            animator4.SetTrigger("RightButton");
+            animator5.SetTrigger("RightButton");
+            animator6.SetTrigger("RightButton");
+            trashAnimator.SetTrigger("trashFade");
 
-                //Destroy(hit.transform.gameObject);
-                //objectSelected = hit.transform.gameObject; 
-                //objectSelected.transform.position = new Vector3(transform.position.x, transform.position.y + 100, transform.position.z);
-            }
+            //Destroy(hit.transform.gameObject);
+            //objectSelected = hit.transform.gameObject; 
+            //objectSelected.transform.position = new Vector3(transform.position.x, transform.position.y + 100, transform.position.z);
         }
     }
 
     public void undo()
     {
+        if (objectSelected)     // should not undo when object is selected
+            return;
         if (changes.Count == 0) // empty stack
             return;
 
-        if (changes.Pop() == 1)  // already popped
+        int lastChange = changes.Pop();
+        if (lastChange == 1)
         {
             GameObject currentObject = objectsChanged.Pop();
             currentObject.SetActive(false);
             undoneObjects.Push(currentObject);
             undoneChanges.Push(0);
         }
-        else
+        else if (lastChange == 0)
         {
             GameObject currentObject = objectsChanged.Pop();
             currentObject.SetActive(true);
@@ -205,17 +213,20 @@ public class ARTapToPlaceObject : MonoBehaviour
 
     public void redo()
     {
+        if (objectSelected)     // should not redo when object is selected
+            return;
         if (undoneChanges.Count == 0) // empty stack
             return;
 
-        if (undoneChanges.Pop() == 0) // already popped
+        int lastChange = undoneChanges.Pop();
+        if (lastChange == 0)
         {
             GameObject currentObject = undoneObjects.Pop();
             currentObject.SetActive(true);
             objectsChanged.Push(currentObject);
             changes.Push(1);
         }
-        else
+        else if (lastChange == 1)
         {
             GameObject currentObject = undoneObjects.Pop();
             currentObject.SetActive(false);
