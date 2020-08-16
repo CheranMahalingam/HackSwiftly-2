@@ -14,11 +14,11 @@ public class ARTapToPlaceObject : MonoBehaviour
     private Pose placementPose; //coordinate
     private bool placementPoseIsValid = false;//place holder that change when falt surface detexted
     private bool checkPreview = false;
-    public GameObject placementIndicator;//indicator of flat floor (a picture)
+    public static GameObject placementIndicator;//indicator of flat floor (a picture)
                                          /////////list of item that you can select////////
-    public GameObject microwave;
-    public GameObject tree;
-    public GameObject grass;
+    public static GameObject microwave;
+    public static GameObject tree;
+    public static GameObject grass;
     private GameObject objectToPlace;// selected item from list of item above
     private GameObject objectPreview;
     private GameObject previewing = null;
@@ -68,6 +68,8 @@ public class ARTapToPlaceObject : MonoBehaviour
     private double microwaveFootprint = 1.2 * 365 / 48000;
     private double treeFootprint = -3.1;
     private double grassFootprint = -1.2;
+
+    private GameObject[,] selectionArray = {{grass}, {tree}, {microwave}};
 
     // Hardcoding researched data
     private string[] countries = { "Africa", "Algeria", "Argentina", "Asia", "Asia (excl. China & India)", "Australia", "Austria", "Azerbaijan", "Bangladesh", "Belarus", "Belgium", "Brazil", "Bulgaria", "Canada", "Chile", "China", "Colombia", "Croatia", "Cyprus", "Czech Republic", "Denmark", "EU-27", "EU-28", "Ecuador", "Egypt", "Estonia", "Europe", "Europe (excl. EU-27)", "Europe (excl. EU-28)", "Finland", "France", "Germany", "Greece", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Japan", "Kazakhstan", "Kuwait", "Latvia", "Lithuania", "Luxembourg", "Macedonia", "Malaysia", "Mexico", "Morocco", "Netherlands", "New Zealand", "North America", "North America (excl. USA)", "Norway", "Oceania", "Oman", "Pakistan", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Saudi Arabia", "Singapore", "Slovakia", "Slovenia", "South Africa", "South America", "South Korea", "Spain", "Sri Lanka", "Sweden", "Switzerland", "Taiwan", "Thailand", "Trinidad and Tobago", "Turkey", "Turkmenistan", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uzbekistan", "Venezuela", "Vietnam", "World" };
