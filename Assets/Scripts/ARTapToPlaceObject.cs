@@ -5,7 +5,7 @@ using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 using System;
 using UnityEngine.EventSystems;
-using System.Diagnostics;
+using UnityEngine.UI;
 using DanielLochner.Assets.SimpleScrollSnap;
 
 public class ARTapToPlaceObject : MonoBehaviour
