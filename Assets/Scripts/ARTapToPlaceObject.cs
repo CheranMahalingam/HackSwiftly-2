@@ -123,7 +123,7 @@ public class ARTapToPlaceObject : MonoBehaviour
     {
         if (objectToPlace)
         {
-            Instantiate(objectToPlace, placementPose.position, placementPose.rotation)
+            Instantiate(objectToPlace, placementPose.position, placementPose.rotation);
         }
     }
 
