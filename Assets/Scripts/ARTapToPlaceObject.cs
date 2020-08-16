@@ -100,7 +100,14 @@ public class ARTapToPlaceObject : MonoBehaviour
                         animator4.SetTrigger("RightButton");
                         animator5.SetTrigger("RightButton");
                         animator6.SetTrigger("RightButton");
+
                         previewMode();
+                        if (hit.transform.name == "NaturePack_Grass1")
+                            selectGrass();
+                        else if (hit.transform.name == "default")
+                            selectTree();
+                        else if (hit.transform.name == "Plane.001")
+                            selectMicrowave();
                     }
                 }
             }
