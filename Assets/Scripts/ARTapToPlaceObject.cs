@@ -145,6 +145,8 @@ public class ARTapToPlaceObject : MonoBehaviour
             {
                 Debug.LogWarning("name works");
                 Destroy(hit.transform.gameObject);
+                //objectSelected = hit.transform.gameObject; 
+                //objectSelected.transform.position = new Vector3(transform.position.x, transform.position.y + 100, transform.position.z);
             }
         }
     }
