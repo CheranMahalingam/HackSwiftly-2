@@ -147,8 +147,7 @@ public class ARTapToPlaceObject : MonoBehaviour
         {
             Debug.LogWarning("Raycast works");
             Debug.LogWarning(hit.transform.name);
-            Destroy(hit.transform.gameObject);
-            if (hit.transform.name == "NaturePack_Grass1")
+            if (hit.transform.name == "NaturePack_Grass1" || hit.transform.name == "default"  || hit.transform.name == "Plane.001")
             {
                 Debug.LogWarning("name works");
                 Destroy(hit.transform.gameObject);
