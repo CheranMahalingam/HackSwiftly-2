@@ -48,6 +48,8 @@ public class ARTapToPlaceObject : MonoBehaviour
     public Animator FlowerSelectorAnimator;
     public Animator ApplianceSelectorAnimator;
     public Animator TypeSelectorAnimator;
+    public Animator TypeSelectorCircle;
+    public Animator SelectorCircle;
 
     public SimpleScrollSnap TreeSelector;
     public SimpleScrollSnap FlowerSelector;
@@ -57,6 +59,7 @@ public class ARTapToPlaceObject : MonoBehaviour
     private GameObject Selected = selectionArray[0, 0];
     private int PrevType = 0;
     private bool MenuState = false;
+    private bool notSelect = true;
 
     private int cnt = 0;
     private Text text;
@@ -197,6 +200,7 @@ public class ARTapToPlaceObject : MonoBehaviour
                                 selectMicrowave();
                             footprintValue -= objectFootprint;
                             text.text = Math.Round(footprintValue,2).ToString();
+                            notSelect = false;
                         }
                     }
                 }
@@ -546,5 +550,17 @@ public class ARTapToPlaceObject : MonoBehaviour
             Selected = selectionArrayAppliance[ApplianceSelector.CurrentPanel];
         }
     }*/
+
+    public void AnimateMenu()
+    {
+        if (notSelect)
+        {
+            TypeSelectorAnimator.SetTrigger("Trigger");
+            ToggleMainMenu();
+            TypeSelectorCircle.SetTrigger("Trigger");
+            SelectorCircle.SetTrigger("Trigger");
+        }
+        notSelect = true;
+    }
 
 }
