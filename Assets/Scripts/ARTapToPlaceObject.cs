@@ -12,11 +12,13 @@ public class ARTapToPlaceObject : MonoBehaviour
     private Pose placementPose; //coordinate
     private bool placementPoseIsValid = false;//place holder that change when falt surface detexted
     private bool checkPreview = false;
+    private bool checkIfObjectSelected = false;
     public GameObject placementIndicator;//indicator of flat floor (a picture)
 /////////list of item that you can select////////
     public GameObject microwave;
     public GameObject tree;
     public GameObject grass;
+    public GameObject indoorPlant;
     private GameObject objectToPlace;// selected item from list of item above
     private GameObject objectPreview;
     private GameObject previewing = null;
@@ -63,6 +65,7 @@ public class ARTapToPlaceObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(checkPreview);
         if (previewing)
         {
             Destroy(previewing);
@@ -92,7 +95,7 @@ public class ARTapToPlaceObject : MonoBehaviour
                 RaycastHit hit;
                 if (Physics.Raycast(ray, out hit))
                 {
-                    if (hit.transform.name == "NaturePack_Grass1" || hit.transform.name == "default" || hit.transform.name == "Plane.001")
+                    if ((hit.transform.name == "NaturePack_Grass1" || hit.transform.name == "default" || hit.transform.name == "Plane.001") && !checkPreview)
                     {
                         objectSelected = hit.transform.gameObject;
                         objectSelected.SetActive(false);
@@ -188,7 +191,7 @@ public class ARTapToPlaceObject : MonoBehaviour
             animator5.SetTrigger("RightButton");
             animator6.SetTrigger("RightButton");
             trashAnimator.SetTrigger("trashFadeOut");
-
+            checkPreview = false;
             //Destroy(hit.transform.gameObject);
             //objectSelected = hit.transform.gameObject; 
             //objectSelected.transform.position = new Vector3(transform.position.x, transform.position.y + 100, transform.position.z);
@@ -346,6 +349,12 @@ public class ARTapToPlaceObject : MonoBehaviour
     {
         objectToPlace = grass;
         objectPreview = grass;
+    }
+
+    public void selectIndoorPlant()
+    {
+        objectToPlace = indoorPlant;
+        objectPreview = indoorPlant;
     }
 
     public void HapticFeedBack()
