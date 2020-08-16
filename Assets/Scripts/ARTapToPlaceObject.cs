@@ -42,8 +42,8 @@ public class ARTapToPlaceObject : MonoBehaviour
     public Animator animator6;
     public Animator trashAnimator;
     private int cnt = 0;
-    public Text carbonFootprint;
     private Text text;
+    private string userCountry;
     private int footprintValue = 0;
     private int objectFootprint = 0;
 
@@ -266,8 +266,6 @@ public class ARTapToPlaceObject : MonoBehaviour
             itemsToPop = 2;
         else
             itemsToPop = 1;
-
-        text.text = "cool";
 
         for (int i = 0;i < itemsToPop;i++)
         {
