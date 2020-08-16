@@ -51,6 +51,7 @@ public class ARTapToPlaceObject : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Application.targetFrameRate = 15;
         Debug.LogWarning(System.Globalization.RegionInfo.CurrentRegion.EnglishName);
         rayManager = FindObjectOfType<ARRaycastManager>();
         canvas.enabled = false;
@@ -197,7 +198,6 @@ public class ARTapToPlaceObject : MonoBehaviour
             animator5.SetTrigger("RightButton");
             animator6.SetTrigger("RightButton");
             trashAnimator.SetTrigger("trashFadeOut");
-            checkPreview = false;
             //Destroy(hit.transform.gameObject);
             //objectSelected = hit.transform.gameObject; 
             //objectSelected.transform.position = new Vector3(transform.position.x, transform.position.y + 100, transform.position.z);
@@ -282,6 +282,7 @@ public class ARTapToPlaceObject : MonoBehaviour
 
     public void previewMode()   // called when cancelled but not checkmarked
     {
+        Debug.LogError("previewMode");
         checkPreview = !checkPreview;
         if (objectSelected && !checkPreview)
         {
