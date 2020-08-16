@@ -43,16 +43,8 @@ public class ARTapToPlaceObject : MonoBehaviour
     public Animator animator6;
     public Animator trashAnimator;
     private int cnt = 0;
-    public Text carbonFootprint;
     private Text text;
-    private int footprintValue = 0;
-    private int objectFootprint = 0;
-
-    // Temporary values (NOT ACCURATE)
-    private int microwaveFootprint = 5;
-    private int treeFootprint = -3;
-    private int grassFootprint = -1;
-    private int indoorPlantFootprint = -2;
+    private string userCountry; 
 
     public Animator TreeSelectorAnimator;
     public Animator FlowerSelectorAnimator;
@@ -182,8 +174,6 @@ public class ARTapToPlaceObject : MonoBehaviour
                                 selectTree();
                             else if (hit.transform.name == "Plane.001")
                                 selectMicrowave();
-                            footprintValue -= objectFootprint;
-                            text.text = footprintValue.ToString();
                         }
                     }
                 }
@@ -240,8 +230,7 @@ public class ARTapToPlaceObject : MonoBehaviour
                 changes.Push(1);
 
             GameObject newObject = Instantiate(objectToPlace, placementPose.position, placementPose.rotation) as GameObject;
-            footprintValue += objectFootprint;
-            text.text = footprintValue.ToString();
+            text.text = "Text has changed";
             objectsChanged.Push(newObject);
             clearRedoStack();
         }
@@ -355,8 +344,6 @@ public class ARTapToPlaceObject : MonoBehaviour
         {
             objectSelected.SetActive(true);
             objectSelected = null;
-            footprintValue += objectFootprint;
-            text.text = footprintValue.ToString();
         }
     }
 
@@ -414,28 +401,24 @@ public class ARTapToPlaceObject : MonoBehaviour
     {
         objectToPlace = microwave;
         objectPreview = microwave;
-        objectFootprint = microwaveFootprint;
     }
 
     public void selectTree()
     {
         objectToPlace = tree;
         objectPreview = tree;
-        objectFootprint = treeFootprint;
     }
 
     public void selectGrass()
     {
         objectToPlace = grass;
         objectPreview = grass;
-        objectFootprint = grassFootprint;
     }
 
     public void selectIndoorPlant()
     {
         objectToPlace = indoorPlant;
         objectPreview = indoorPlant;
-        objectFootprint = indoorPlantFootprint;
     }
 
     public void HapticFeedBack()
