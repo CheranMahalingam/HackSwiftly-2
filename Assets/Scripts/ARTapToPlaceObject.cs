@@ -20,8 +20,7 @@ public class ARTapToPlaceObject : MonoBehaviour
     private GameObject objectPreview;
     private GameObject previewing = null;
     private GameObject newObject;
-	private List<GameObject> objectsPlaced;
-    private List<GameObject> objectsRemoved;
+    private GameObject objectSelected;
     private Vector2 fingerLeft;//swipe detection
     private Vector2 fingerRight;//swipe detection
     public Canvas canvas;
@@ -40,7 +39,6 @@ public class ARTapToPlaceObject : MonoBehaviour
     {
         rayManager = FindObjectOfType<ARRaycastManager>();
         canvas.enabled = false;
-        objectsPlaced = new List<GameObject>();
 
         // Preprocessing for generating faster mapping
         for (int i = 0; i < countries.Length; i++)
@@ -125,18 +123,8 @@ public class ARTapToPlaceObject : MonoBehaviour
     {
         if (objectToPlace)
         {
-            newObject = Instantiate(objectToPlace, placementPose.position, placementPose.rotation) as GameObject;
-            newObject.name = "obj" + objectsPlaced.Count.ToString();
-            objectsPlaced.Add(newObject);
-            //Instantiate(objectToPlace, placementPose.position, placementPose.rotation);
+            Instantiate(objectToPlace, placementPose.position, placementPose.rotation);
         }
-    }
-
-    public void DeleteLastObject()
-    {
-        Destroy(objectsPlaced[objectsPlaced.Count - 1]);
-        //objectsRemoved.Add(objectsPlaced[objectsPlaced.Count - 1]);
-        objectsPlaced.RemoveAt(objectsPlaced.Count - 1);
     }
 
     public void DeleteObject()
@@ -147,19 +135,13 @@ public class ARTapToPlaceObject : MonoBehaviour
         {
             Debug.LogWarning("Raycast works");
             Debug.LogWarning(hit.transform.name);
-            Destroy(hit.transform.gameObject);
-            if (hit.transform.name == "NaturePack_Grass1")
+            if (hit.transform.name == "NaturePack_Grass1" || hit.transform.name == "default"  || hit.transform.name == "Plane.001")
             {
                 Debug.LogWarning("name works");
-                Destroy(hit.transform.gameObject);
+                //Destroy(hit.transform.gameObject);
+
             }
         }
-    }
-
-    public void AddLastObject()
-    {
-        GameObject oldObject = Instantiate(objectsRemoved[objectsRemoved.Count - 1], placementPose.position, placementPose.rotation) as GameObject;
-        objectsPlaced.Add(oldObject);
     }
 
     private bool IsPointerAboveUIObject()
