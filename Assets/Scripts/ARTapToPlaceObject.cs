@@ -366,7 +366,7 @@ public class ARTapToPlaceObject : MonoBehaviour
 
     public void HapticFeedBack()
     {
-        Vibration.VibrateMs(200);
+        Vibrator.Vibrate();
     }
 
     public void ToggleMainMenu()
