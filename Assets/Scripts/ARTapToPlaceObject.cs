@@ -138,8 +138,9 @@ public class ARTapToPlaceObject : MonoBehaviour
             if (hit.transform.name == "NaturePack_Grass1" || hit.transform.name == "default"  || hit.transform.name == "Plane.001")
             {
                 Debug.LogWarning("name works");
-                //Destroy(hit.transform.gameObject);
-
+                Destroy(hit.transform.gameObject);
+                //objectSelected = hit.transform.gameObject; 
+                //objectSelected.transform.position = new Vector3(transform.position.x, transform.position.y + 100, transform.position.z);
             }
         }
     }
