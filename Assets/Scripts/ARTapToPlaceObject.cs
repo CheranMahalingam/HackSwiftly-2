@@ -142,7 +142,11 @@ public class ARTapToPlaceObject : MonoBehaviour
             if (hit.transform.name == "NaturePack_Grass1" || hit.transform.name == "default"  || hit.transform.name == "Plane.001")
             {
                 Debug.LogWarning("name works");
-                hit.transform.gameObject.SetActive(false);
+
+                GameObject currentObject = hit.transform.gameObject;
+                currentObject.SetActive(false);
+                objectsChanged.Push(currentObject);
+                changes.Push(0);
                 clearRedoStack();
 
                 //Destroy(hit.transform.gameObject);
@@ -196,7 +200,12 @@ public class ARTapToPlaceObject : MonoBehaviour
 
     private void clearRedoStack()
     {
-        return;
+        while (undoneChanges.Count > 0)
+        {
+            if (undoneChanges.Pop() == 0)
+                Destroy(undoneObjects.Peek());
+            undoneObjects.Pop();
+        }
     }
 
     public void previewMode()
