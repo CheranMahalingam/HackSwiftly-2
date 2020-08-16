@@ -521,7 +521,7 @@ public class ARTapToPlaceObject : MonoBehaviour
         PrevType = TypeSelector.CurrentPanel; 
     }
 
-    public void ChangeSelectedItem() => Selected = selectionArray[TypeSelector][(TypeSelector.CurrentPanel == 0) ? (FlowerSelector.CurrentPanel) : ((TypeSelector.CurrentPanel == 1) ? (TreeSelector.CurrentPanel) : (ApplianceSelector.CurrentPanel))];
+    public void ChangeSelectedItem() => Selected = selectionArray[TypeSelector.CurrentPanel,(TypeSelector.CurrentPanel == 0) ? (FlowerSelector.CurrentPanel) : ((TypeSelector.CurrentPanel == 1) ? (TreeSelector.CurrentPanel) : (ApplianceSelector.CurrentPanel))];
 
     /*public void ChangeSelectedItem()
     {
