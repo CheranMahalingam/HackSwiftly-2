@@ -115,9 +115,13 @@ public class ARTapToPlaceObject : MonoBehaviour
         userCountry = System.Globalization.RegionInfo.CurrentRegion.EnglishName;
         int userIndex;
         if (countryIndex.ContainsKey(userCountry))
+        {
             userIndex = countryIndex[userCountry];
+        }
         else
+        {
             userIndex = countries.Length - 1;
+        }
         userPerCapita = perCapita[userIndex];
         userEmissionPerEnergy = emissionPerEnergy[userIndex];
     }
