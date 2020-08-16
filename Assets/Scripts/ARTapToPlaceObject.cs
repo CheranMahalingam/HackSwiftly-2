@@ -92,7 +92,7 @@ public class ARTapToPlaceObject : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        userCountry = System.Globalization.RegionInfo.CurrentRegion.EnglishName;
+        Debug.LogWarning(System.Globalization.RegionInfo.CurrentRegion.EnglishName);
         rayManager = FindObjectOfType<ARRaycastManager>();
         canvas.enabled = false;
 
@@ -101,8 +101,6 @@ public class ARTapToPlaceObject : MonoBehaviour
         {
             countryIndex[countries[i]] = i;
         }
-
-        
     }
 
     // Update is called once per frame
