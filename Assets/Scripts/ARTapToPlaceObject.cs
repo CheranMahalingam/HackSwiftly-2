@@ -94,7 +94,7 @@ public class ARTapToPlaceObject : MonoBehaviour
         // Provide Text position and size using RectTransform.
         RectTransform rectTransform;
         rectTransform = text.GetComponent<RectTransform>();
-        rectTransform.localPosition = new Vector3(-420, 800, 0);
+        rectTransform.localPosition = new Vector3(-350, 800, 0);
         rectTransform.sizeDelta = new Vector2(600, 200);
     }
 
