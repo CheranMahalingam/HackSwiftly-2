@@ -88,13 +88,13 @@ public class ARTapToPlaceObject : MonoBehaviour
         // Set Text component properties.
         text = textGO.GetComponent<Text>();
         text.font = arial;
-        text.fontSize = 78;
+        text.fontSize = 40;
         text.alignment = TextAnchor.MiddleCenter;
 
         // Provide Text position and size using RectTransform.
         RectTransform rectTransform;
         rectTransform = text.GetComponent<RectTransform>();
-        rectTransform.localPosition = new Vector3(0, 0, 0);
+        rectTransform.localPosition = new Vector3(-420, 800, 0);
         rectTransform.sizeDelta = new Vector2(600, 200);
     }
 
