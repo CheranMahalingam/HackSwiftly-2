@@ -457,6 +457,6 @@ public class ARTapToPlaceObject : MonoBehaviour
 
     public void HapticFeedBack()
     {
-        Vibration.VibrateMs(200);
+        //Vibration.VibrateMs(200);
     }
 }
