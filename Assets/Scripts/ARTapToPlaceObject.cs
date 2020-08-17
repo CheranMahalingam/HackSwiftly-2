@@ -438,7 +438,7 @@ public class ARTapToPlaceObject : MonoBehaviour
     {
         objectToPlace = tree;
         objectPreview = tree;
-        objectFootprint = 42;
+        objectFootprint = -42;
     }
 
     public void selectGrass()
@@ -452,7 +452,7 @@ public class ARTapToPlaceObject : MonoBehaviour
     {
         objectToPlace = indoorPlant;
         objectPreview = indoorPlant;
-        objectFootprint = 5;
+        objectFootprint = -5;
     }
 
     public void HapticFeedBack()
