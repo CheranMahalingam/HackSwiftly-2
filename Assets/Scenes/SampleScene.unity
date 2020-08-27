@@ -4386,6 +4386,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9d36fbdd527ae14281603cd2f9f05a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  placementIndicator: {fileID: 1403222929}
+  microwave: {fileID: 1587114078}
+  tree: {fileID: 1153807403}
+  grass: {fileID: 1511009325}
   canvas: {fileID: 2107456243}
   animator1: {fileID: 1047526439}
   animator2: {fileID: 93114874}
@@ -6359,6 +6363,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9d36fbdd527ae14281603cd2f9f05a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  placementIndicator: {fileID: 1403222929}
+  microwave: {fileID: 1587114078}
+  tree: {fileID: 1153807403}
+  grass: {fileID: 1511009325}
   canvas: {fileID: 2107456243}
   animator1: {fileID: 1047526439}
   animator2: {fileID: 93114874}
@@ -6371,8 +6379,8 @@ MonoBehaviour:
   FlowerSelectorAnimator: {fileID: 2122824904}
   ApplianceSelectorAnimator: {fileID: 510775144}
   TypeSelectorAnimator: {fileID: 2145562579}
-  TypeSelectorCircle: {fileID: 0}
-  SelectorCircle: {fileID: 0}
+  TypeSelectorCircle: {fileID: 1405412676}
+  SelectorCircle: {fileID: 1378518614}
   TreeSelector: {fileID: 731930580}
   FlowerSelector: {fileID: 2122824902}
   ApplianceSelector: {fileID: 510775142}
@@ -6672,7 +6680,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &2107456241
 MonoBehaviour:
   m_ObjectHideFlags: 0

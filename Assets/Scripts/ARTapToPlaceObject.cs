@@ -12,13 +12,13 @@ public class ARTapToPlaceObject : MonoBehaviour
 {
     private ARRaycastManager rayManager; // controller
     private Pose placementPose; //coordinate
-    private bool placementPoseIsValid = false;//place holder that change when falt surface detexted
+    private bool placementPoseIsValid = false;//place holder that change when flat surface detexted
     private bool checkPreview = false;
-    public static GameObject placementIndicator;//indicator of flat floor (a picture)
+    public GameObject placementIndicator;//indicator of flat floor (a picture)
                                          /////////list of item that you can select////////
-    public static GameObject microwave;
-    public static GameObject tree;
-    public static GameObject grass;
+    public GameObject microwave;
+    public GameObject tree;
+    public GameObject grass;
     private GameObject objectToPlace;// selected item from list of item above
     private GameObject objectPreview;
     private GameObject previewing = null;
@@ -43,7 +43,6 @@ public class ARTapToPlaceObject : MonoBehaviour
     public Animator animator5;
     public Animator animator6;
     public Animator trashAnimator;
-
     public Animator TreeSelectorAnimator;
     public Animator FlowerSelectorAnimator;
     public Animator ApplianceSelectorAnimator;
@@ -56,12 +55,10 @@ public class ARTapToPlaceObject : MonoBehaviour
     public SimpleScrollSnap ApplianceSelector;
     public SimpleScrollSnap TypeSelector;
 
-    private GameObject Selected = selectionArray[0, 0];
+    //private GameObject Selected = selectionArray[0, 0];
     private int PrevType = 0;
     private bool MenuState = false;
     private bool notSelect = true;
-
-    private int cnt = 0;
     private Text text;
     private string userCountry;
     private double userPerCapita, userEmissionPerEnergy;
@@ -74,8 +71,8 @@ public class ARTapToPlaceObject : MonoBehaviour
     private static double grassFootprint = -1.2;
     private static double carbonIntensity = 0.2318847106282661;
 
-    private static GameObject[,] selectionArray = {{grass}, {tree}, {microwave}};
-    private static double[,] selectionArrayFootprint = {{grassFootprint * carbonIntensity}, {treeFootprint * carbonIntensity}, {microwaveFootprint * carbonIntensity}};
+    //private static GameObject[,] selectionArray = {{grass}, {tree}, {microwave}};
+    //private static double[,] selectionArrayFootprint = {{grassFootprint * carbonIntensity}, {treeFootprint * carbonIntensity}, {microwaveFootprint * carbonIntensity}};
 
     // Hardcoding researched data
     private string[] countries = { "Africa", "Algeria", "Argentina", "Asia", "Asia (excl. China & India)", "Australia", "Austria", "Azerbaijan", "Bangladesh", "Belarus", "Belgium", "Brazil", "Bulgaria", "Canada", "Chile", "China", "Colombia", "Croatia", "Cyprus", "Czech Republic", "Denmark", "EU-27", "EU-28", "Ecuador", "Egypt", "Estonia", "Europe", "Europe (excl. EU-27)", "Europe (excl. EU-28)", "Finland", "France", "Germany", "Greece", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Japan", "Kazakhstan", "Kuwait", "Latvia", "Lithuania", "Luxembourg", "Macedonia", "Malaysia", "Mexico", "Morocco", "Netherlands", "New Zealand", "North America", "North America (excl. USA)", "Norway", "Oceania", "Oman", "Pakistan", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Saudi Arabia", "Singapore", "Slovakia", "Slovenia", "South Africa", "South America", "South Korea", "Spain", "Sri Lanka", "Sweden", "Switzerland", "Taiwan", "Thailand", "Trinidad and Tobago", "Turkey", "Turkmenistan", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uzbekistan", "Venezuela", "Vietnam", "World" };
@@ -210,7 +207,7 @@ public class ARTapToPlaceObject : MonoBehaviour
 
     private void UpdatePlacementPose()
     {
-        var screenCenter = Camera.current.ViewportToScreenPoint(new Vector3(0.5f, 0.5f));
+        var screenCenter = Camera.main.ViewportToScreenPoint(new Vector3(0.5f, 0.5f));
         rayManager.Raycast(screenCenter, hits, TrackableType.Planes);
 
         placementPoseIsValid = hits.Count > 0;
@@ -218,7 +215,7 @@ public class ARTapToPlaceObject : MonoBehaviour
         if (placementPoseIsValid)
         {
             placementPose = hits[0].pose;
-            var cameraForward = Camera.current.transform.forward;
+            var cameraForward = Camera.main.transform.forward;
             var cameraBearing = new Vector3(cameraForward.x, 0, cameraForward.z).normalized;
             placementPose.rotation = Quaternion.LookRotation(cameraBearing);
         }
@@ -530,11 +527,12 @@ public class ARTapToPlaceObject : MonoBehaviour
 
     public void ChangeSelectedItem()
     {
-        Selected = selectionArray[TypeSelector.CurrentPanel, (TypeSelector.CurrentPanel == 0) ? (FlowerSelector.CurrentPanel) : ((TypeSelector.CurrentPanel == 1) ? (TreeSelector.CurrentPanel) : (ApplianceSelector.CurrentPanel))];
-        objectFootprint = selectionArrayFootprint[TypeSelector.CurrentPanel, (TypeSelector.CurrentPanel == 0) ? (FlowerSelector.CurrentPanel) : ((TypeSelector.CurrentPanel == 1) ? (TreeSelector.CurrentPanel) : (ApplianceSelector.CurrentPanel))];
-        objectToPlace = Selected;
-        objectPreview = Selected;
-
+        //Selected = selectionArray[TypeSelector.CurrentPanel, (TypeSelector.CurrentPanel == 0) ? (FlowerSelector.CurrentPanel) : ((TypeSelector.CurrentPanel == 1) ? (TreeSelector.CurrentPanel) : (ApplianceSelector.CurrentPanel))];
+        //objectFootprint = selectionArrayFootprint[TypeSelector.CurrentPanel, (TypeSelector.CurrentPanel == 0) ? (FlowerSelector.CurrentPanel) : ((TypeSelector.CurrentPanel == 1) ? (TreeSelector.CurrentPanel) : (ApplianceSelector.CurrentPanel))];
+        //objectToPlace = Selected;
+        //objectPreview = Selected;
+        objectToPlace = grass;
+        objectPreview = grass;
     }
 
     public void FirstSelect()
