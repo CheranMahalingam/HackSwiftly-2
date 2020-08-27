@@ -531,6 +531,7 @@ public class ARTapToPlaceObject : MonoBehaviour
         //objectFootprint = selectionArrayFootprint[TypeSelector.CurrentPanel, (TypeSelector.CurrentPanel == 0) ? (FlowerSelector.CurrentPanel) : ((TypeSelector.CurrentPanel == 1) ? (TreeSelector.CurrentPanel) : (ApplianceSelector.CurrentPanel))];
         //objectToPlace = Selected;
         //objectPreview = Selected;
+        Debug.LogWarning("Selected Item");
         objectToPlace = grass;
         objectPreview = grass;
     }
