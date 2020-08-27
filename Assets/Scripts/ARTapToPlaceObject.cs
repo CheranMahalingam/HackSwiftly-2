@@ -123,7 +123,6 @@ public class ARTapToPlaceObject : MonoBehaviour
     void Start()
     {
         rayManager = FindObjectOfType<ARRaycastManager>();
-
         canvas.enabled = false;
 
         // Preprocessing for generating faster mapping
@@ -211,7 +210,7 @@ public class ARTapToPlaceObject : MonoBehaviour
 
     private void UpdatePlacementPose()
     {
-        var screenCenter = Camera.main.ViewportToScreenPoint(new Vector3(0.5f, 0.5f));
+        var screenCenter = Camera.current.ViewportToScreenPoint(new Vector3(0.5f, 0.5f));
         rayManager.Raycast(screenCenter, hits, TrackableType.Planes);
 
         placementPoseIsValid = hits.Count > 0;
