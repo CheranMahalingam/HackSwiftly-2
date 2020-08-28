@@ -55,9 +55,9 @@ public class ARTapToPlaceObject : MonoBehaviour
     public SimpleScrollSnap ApplianceSelector;
     public SimpleScrollSnap TypeSelector;
 
-    //private GameObject Selected = selectionArray[0, 0];
+    private GameObject Selected;
     private int PrevType = 0;
-    private bool MenuState = false;
+    private static bool MenuState = false;
     private bool notSelect = true;
     private Text text;
     private string userCountry;
@@ -71,8 +71,8 @@ public class ARTapToPlaceObject : MonoBehaviour
     private static double grassFootprint = -1.2;
     private static double carbonIntensity = 0.2318847106282661;
 
-    //private static GameObject[,] selectionArray = {{grass}, {tree}, {microwave}};
-    //private static double[,] selectionArrayFootprint = {{grassFootprint * carbonIntensity}, {treeFootprint * carbonIntensity}, {microwaveFootprint * carbonIntensity}};
+    public GameObject[,] selectionArray;
+    public double[,] selectionArrayFootprint;
 
     // Hardcoding researched data
     private string[] countries = { "Africa", "Algeria", "Argentina", "Asia", "Asia (excl. China & India)", "Australia", "Austria", "Azerbaijan", "Bangladesh", "Belarus", "Belgium", "Brazil", "Bulgaria", "Canada", "Chile", "China", "Colombia", "Croatia", "Cyprus", "Czech Republic", "Denmark", "EU-27", "EU-28", "Ecuador", "Egypt", "Estonia", "Europe", "Europe (excl. EU-27)", "Europe (excl. EU-28)", "Finland", "France", "Germany", "Greece", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Japan", "Kazakhstan", "Kuwait", "Latvia", "Lithuania", "Luxembourg", "Macedonia", "Malaysia", "Mexico", "Morocco", "Netherlands", "New Zealand", "North America", "North America (excl. USA)", "Norway", "Oceania", "Oman", "Pakistan", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Saudi Arabia", "Singapore", "Slovakia", "Slovenia", "South Africa", "South America", "South Korea", "Spain", "Sri Lanka", "Sweden", "Switzerland", "Taiwan", "Thailand", "Trinidad and Tobago", "Turkey", "Turkmenistan", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uzbekistan", "Venezuela", "Vietnam", "World" };
@@ -114,6 +114,11 @@ public class ARTapToPlaceObject : MonoBehaviour
         rectTransform = text.GetComponent<RectTransform>();
         rectTransform.localPosition = new Vector3(-400, -600, 0);
         rectTransform.sizeDelta = new Vector2(600, 200);
+
+        //Set Arrays of GameObjects
+        selectionArray = new GameObject[,]{ { grass}, { tree}, { microwave} };
+        selectionArrayFootprint = new double[,]{ { grassFootprint* carbonIntensity}, { treeFootprint* carbonIntensity}, { microwaveFootprint* carbonIntensity} };
+        Selected = selectionArray[0, 0];
     }
 
     // Start is called before the first frame update
@@ -527,13 +532,18 @@ public class ARTapToPlaceObject : MonoBehaviour
 
     public void ChangeSelectedItem()
     {
-        //Selected = selectionArray[TypeSelector.CurrentPanel, (TypeSelector.CurrentPanel == 0) ? (FlowerSelector.CurrentPanel) : ((TypeSelector.CurrentPanel == 1) ? (TreeSelector.CurrentPanel) : (ApplianceSelector.CurrentPanel))];
-        //objectFootprint = selectionArrayFootprint[TypeSelector.CurrentPanel, (TypeSelector.CurrentPanel == 0) ? (FlowerSelector.CurrentPanel) : ((TypeSelector.CurrentPanel == 1) ? (TreeSelector.CurrentPanel) : (ApplianceSelector.CurrentPanel))];
-        //objectToPlace = Selected;
-        //objectPreview = Selected;
+
+        Debug.LogWarning(MenuState);
+        //ARTapToPlaceObject temp = new ARTapToPlaceObject();
+        Selected = selectionArray[TypeSelector.CurrentPanel, (TypeSelector.CurrentPanel == 0) ? (FlowerSelector.CurrentPanel) : ((TypeSelector.CurrentPanel == 1) ? (TreeSelector.CurrentPanel) : (ApplianceSelector.CurrentPanel))];
+        objectFootprint = selectionArrayFootprint[TypeSelector.CurrentPanel, (TypeSelector.CurrentPanel == 0) ? (FlowerSelector.CurrentPanel) : ((TypeSelector.CurrentPanel == 1) ? (TreeSelector.CurrentPanel) : (ApplianceSelector.CurrentPanel))];
+        objectToPlace = Selected;
         Debug.LogWarning("Selected Item");
-        objectToPlace = grass;
-        objectPreview = grass;
+        Debug.LogWarning(objectToPlace);
+        //Debug.LogWarning((TypeSelector.CurrentPanel == 0) ? (FlowerSelector.CurrentPanel) : ((TypeSelector.CurrentPanel == 1) ? (TreeSelector.CurrentPanel) : (ApplianceSelector.CurrentPanel)));
+        Debug.LogWarning(objectFootprint);
+        //objectToPlace = grass;
+        //objectPreview = grass;
     }
 
     public void FirstSelect()
