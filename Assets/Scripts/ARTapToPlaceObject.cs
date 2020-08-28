@@ -12,8 +12,10 @@ public class ARTapToPlaceObject : MonoBehaviour
 {
     private ARRaycastManager rayManager; // controller
     private Pose placementPose; //coordinate
+    private Pose originalPose;
     private bool placementPoseIsValid = false;//place holder that change when flat surface detexted
     private bool checkPreview = false;
+    private bool checkIfSelected = false;
     public GameObject placementIndicator;//indicator of flat floor (a picture)
                                          /////////list of item that you can select////////
     public GameObject microwave;
@@ -185,6 +187,9 @@ public class ARTapToPlaceObject : MonoBehaviour
                         {
                             objectSelected = hit.transform.gameObject;
                             objectSelected.SetActive(false);
+                            checkIfSelected = true;
+                            originalPose.position = placementPose.position;
+                            originalPose.rotation = placementPose.rotation;
                             animator1.SetTrigger("LeftButton");
                             animator2.SetTrigger("LeftButton");
                             animator3.SetTrigger("LeftButton");
@@ -200,6 +205,7 @@ public class ARTapToPlaceObject : MonoBehaviour
                                 selectTree();
                             else if (hit.transform.name == "Plane.001")
                                 selectMicrowave();
+                            ToggleMainMenu();
                             footprintValue -= objectFootprint;
                             text.text = Math.Round(footprintValue,2).ToString();
                             notSelect = false;
@@ -232,6 +238,7 @@ public class ARTapToPlaceObject : MonoBehaviour
         {
             placementIndicator.SetActive(true);
             placementIndicator.transform.SetPositionAndRotation(placementPose.position, placementPose.rotation);
+            Debug.LogWarning(checkPreview);
             if (objectPreview && checkPreview)
             {
                 //objectPreview.SetActive(true);
@@ -389,12 +396,18 @@ public class ARTapToPlaceObject : MonoBehaviour
     public void previewMode()   // called when cancelled but not checkmarked
     {
         checkPreview = !checkPreview;
-        if (objectSelected && !checkPreview)
+        if (objectSelected && checkPreview && !checkIfSelected)
         {
             objectSelected.SetActive(true);
             objectSelected = null;
             footprintValue += objectFootprint;
             text.text = Math.Round(footprintValue,2).ToString();
+        }
+        else if (objectSelected && checkIfSelected)
+        {
+            objectSelected.SetActive(true);
+            objectSelected.transform.SetPositionAndRotation(originalPose.position, originalPose.rotation);
+            checkIfSelected = false;
         }
     }
 
@@ -440,6 +453,7 @@ public class ARTapToPlaceObject : MonoBehaviour
     private void showUI()
     {
         canvas.enabled = true;
+        checkPreview = true;
     }
 
     private void hideUI()
@@ -475,7 +489,7 @@ public class ARTapToPlaceObject : MonoBehaviour
 
     public void ToggleMainMenu()
     {
-        UnityEngine.Debug.LogWarning(TypeSelector.CurrentPanel);
+        Debug.LogWarning(TypeSelector.CurrentPanel);
         
         if(TypeSelector.CurrentPanel == 0)
         {
@@ -538,10 +552,8 @@ public class ARTapToPlaceObject : MonoBehaviour
         Selected = selectionArray[TypeSelector.CurrentPanel, (TypeSelector.CurrentPanel == 0) ? (FlowerSelector.CurrentPanel) : ((TypeSelector.CurrentPanel == 1) ? (TreeSelector.CurrentPanel) : (ApplianceSelector.CurrentPanel))];
         objectFootprint = selectionArrayFootprint[TypeSelector.CurrentPanel, (TypeSelector.CurrentPanel == 0) ? (FlowerSelector.CurrentPanel) : ((TypeSelector.CurrentPanel == 1) ? (TreeSelector.CurrentPanel) : (ApplianceSelector.CurrentPanel))];
         objectToPlace = Selected;
-        Debug.LogWarning("Selected Item");
-        Debug.LogWarning(objectToPlace);
+        objectPreview = Selected;
         //Debug.LogWarning((TypeSelector.CurrentPanel == 0) ? (FlowerSelector.CurrentPanel) : ((TypeSelector.CurrentPanel == 1) ? (TreeSelector.CurrentPanel) : (ApplianceSelector.CurrentPanel)));
-        Debug.LogWarning(objectFootprint);
         //objectToPlace = grass;
         //objectPreview = grass;
     }

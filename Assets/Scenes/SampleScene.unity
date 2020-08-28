@@ -4399,9 +4399,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   placementIndicator: {fileID: 1403222929}
-  microwave: {fileID: 1587114078}
-  tree: {fileID: 1153807403}
-  grass: {fileID: 1511009325}
+  microwave: {fileID: 1355362438946636277, guid: e9a406aaf2443d04799ea7713560a3e7, type: 3}
+  tree: {fileID: 968970616416513670, guid: 869a92284d923c54f9e3aad7881a7b68, type: 3}
+  grass: {fileID: 6354353466431751027, guid: 33e85d4c36cc9054cb9722c5f1f6365c, type: 3}
   canvas: {fileID: 2107456243}
   animator1: {fileID: 1047526439}
   animator2: {fileID: 93114874}
@@ -6376,9 +6376,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   placementIndicator: {fileID: 1403222929}
-  microwave: {fileID: 1587114078}
-  tree: {fileID: 1153807403}
-  grass: {fileID: 1511009325}
+  microwave: {fileID: 1355362438946636277, guid: e9a406aaf2443d04799ea7713560a3e7, type: 3}
+  tree: {fileID: 968970616416513670, guid: 869a92284d923c54f9e3aad7881a7b68, type: 3}
+  grass: {fileID: 6354353466431751027, guid: 33e85d4c36cc9054cb9722c5f1f6365c, type: 3}
   canvas: {fileID: 2107456243}
   animator1: {fileID: 1047526439}
   animator2: {fileID: 93114874}
