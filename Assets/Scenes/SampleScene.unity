@@ -4402,6 +4402,7 @@ MonoBehaviour:
   microwave: {fileID: 1355362438946636277, guid: e9a406aaf2443d04799ea7713560a3e7, type: 3}
   tree: {fileID: 968970616416513670, guid: 869a92284d923c54f9e3aad7881a7b68, type: 3}
   grass: {fileID: 6354353466431751027, guid: 33e85d4c36cc9054cb9722c5f1f6365c, type: 3}
+  alocasia: {fileID: 96074419915285973, guid: e32f4b7f6411c254780eeda1991f4539, type: 3}
   canvas: {fileID: 2107456243}
   animator1: {fileID: 1047526439}
   animator2: {fileID: 93114874}
@@ -6379,6 +6380,7 @@ MonoBehaviour:
   microwave: {fileID: 1355362438946636277, guid: e9a406aaf2443d04799ea7713560a3e7, type: 3}
   tree: {fileID: 968970616416513670, guid: 869a92284d923c54f9e3aad7881a7b68, type: 3}
   grass: {fileID: 6354353466431751027, guid: 33e85d4c36cc9054cb9722c5f1f6365c, type: 3}
+  alocasia: {fileID: 96074419915285973, guid: e32f4b7f6411c254780eeda1991f4539, type: 3}
   canvas: {fileID: 2107456243}
   animator1: {fileID: 1047526439}
   animator2: {fileID: 93114874}
@@ -6692,7 +6694,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2107456241
 MonoBehaviour:
   m_ObjectHideFlags: 0

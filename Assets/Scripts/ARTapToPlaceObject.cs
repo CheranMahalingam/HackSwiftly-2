@@ -21,16 +21,13 @@ public class ARTapToPlaceObject : MonoBehaviour
     public GameObject microwave;
     public GameObject tree;
     public GameObject grass;
+    public GameObject alocasia;
     private GameObject objectToPlace;// selected item from list of item above
     private GameObject objectPreview;
     private GameObject previewing = null;
     private GameObject newObject;
     private GameObject objectSelected;
-    private Vector2 fingerLeft;//swipe detection
-    private Vector2 fingerRight;//swipe detection
     public Canvas canvas;
-    private bool detectSwipe = false;
-    private float SWIPE_THRESHOLD = 100f;
     private static List<ARRaycastHit> hits = new List<ARRaycastHit>();
     private Stack<GameObject> objectsChanged = new Stack<GameObject>();
     private Stack<int> changes = new Stack<int>();
@@ -118,7 +115,7 @@ public class ARTapToPlaceObject : MonoBehaviour
         rectTransform.sizeDelta = new Vector2(600, 200);
 
         //Set Arrays of GameObjects
-        selectionArray = new GameObject[,]{ { grass}, { tree}, { microwave} };
+        selectionArray = new GameObject[,]{ { grass, alocasia}, { tree, alocasia}, { microwave, alocasia} };
         selectionArrayFootprint = new double[,]{ { grassFootprint* carbonIntensity}, { treeFootprint* carbonIntensity}, { microwaveFootprint* carbonIntensity} };
         Selected = selectionArray[0, 0];
     }
@@ -162,19 +159,6 @@ public class ARTapToPlaceObject : MonoBehaviour
 
         foreach (Touch touch in Input.touches)
         {
-            if (touch.phase == TouchPhase.Began)
-            {
-                detectSwipe = false;
-                fingerLeft = touch.position;
-                fingerRight = touch.position;
-            }
-
-            if (touch.phase == TouchPhase.Moved)
-            {
-                fingerRight = touch.position;
-                checkSwipe();
-            }
-
             if (touch.phase == TouchPhase.Ended)
             {
                 if (!checkPreview && !IsPointerAboveUIObject())
@@ -183,7 +167,7 @@ public class ARTapToPlaceObject : MonoBehaviour
                     RaycastHit hit;
                     if (Physics.Raycast(ray, out hit))
                     {
-                        if (hit.transform.name == "NaturePack_Grass1" || hit.transform.name == "default" || hit.transform.name == "Plane.001")
+                        if (hit.transform.name == "NaturePack_Grass1" || hit.transform.name == "default" || hit.transform.name == "Plane.001" || hit.transform.name == "Alocasia")
                         {
                             objectSelected = hit.transform.gameObject;
                             objectSelected.SetActive(false);
@@ -205,7 +189,8 @@ public class ARTapToPlaceObject : MonoBehaviour
                                 selectTree();
                             else if (hit.transform.name == "Plane.001")
                                 selectMicrowave();
-                            ToggleMainMenu();
+                            else if (hit.transform.name == "Alocasia")
+                                selectAlocasia();
                             footprintValue -= objectFootprint;
                             text.text = Math.Round(footprintValue,2).ToString();
                             notSelect = false;
@@ -318,7 +303,6 @@ public class ARTapToPlaceObject : MonoBehaviour
             {
                 GameObject currentObject = objectsChanged.Pop();
                 currentObject.SetActive(false);
-                Debug.LogWarning("tempfootprint: " + tempFootprint);
                 footprintValue -= tempFootprint;
                 text.text = Math.Round(footprintValue, 2).ToString();
 
@@ -406,7 +390,6 @@ public class ARTapToPlaceObject : MonoBehaviour
         else if (objectSelected && checkIfSelected)
         {
             objectSelected.SetActive(true);
-            objectSelected.transform.SetPositionAndRotation(originalPose.position, originalPose.rotation);
             checkIfSelected = false;
         }
     }
@@ -431,36 +414,6 @@ public class ARTapToPlaceObject : MonoBehaviour
         return results.Count > 0;
     }
 
-    private void checkSwipe()
-    {
-        if (horizontalMove() > SWIPE_THRESHOLD)
-        {
-            showUI();
-            detectSwipe = true;
-        }
-        else if (horizontalMove() < -SWIPE_THRESHOLD)
-        {
-            hideUI();
-            detectSwipe = true;
-        }
-    }
-
-    private float horizontalMove()
-    {
-        return fingerRight.x - fingerLeft.x;
-    }
-
-    private void showUI()
-    {
-        canvas.enabled = true;
-        checkPreview = true;
-    }
-
-    private void hideUI()
-    {
-        canvas.enabled = false;
-    }
-
     public void selectMicrowave()
     {
         objectToPlace = microwave;
@@ -482,15 +435,19 @@ public class ARTapToPlaceObject : MonoBehaviour
         objectFootprint = grassFootprint * userEmissionPerEnergy;
     }
 
+    public void selectAlocasia()
+    {
+        objectToPlace = alocasia;
+        objectPreview = alocasia;
+    }
+
     public void HapticFeedBack()
     {
         //Vibrator.Vibrate();
     }
 
     public void ToggleMainMenu()
-    {
-        Debug.LogWarning(TypeSelector.CurrentPanel);
-        
+    {   
         if(TypeSelector.CurrentPanel == 0)
         {
             FlowerSelectorAnimator.SetTrigger("Toggle");
@@ -546,8 +503,6 @@ public class ARTapToPlaceObject : MonoBehaviour
 
     public void ChangeSelectedItem()
     {
-
-        Debug.LogWarning(MenuState);
         //ARTapToPlaceObject temp = new ARTapToPlaceObject();
         Selected = selectionArray[TypeSelector.CurrentPanel, (TypeSelector.CurrentPanel == 0) ? (FlowerSelector.CurrentPanel) : ((TypeSelector.CurrentPanel == 1) ? (TreeSelector.CurrentPanel) : (ApplianceSelector.CurrentPanel))];
         objectFootprint = selectionArrayFootprint[TypeSelector.CurrentPanel, (TypeSelector.CurrentPanel == 0) ? (FlowerSelector.CurrentPanel) : ((TypeSelector.CurrentPanel == 1) ? (TreeSelector.CurrentPanel) : (ApplianceSelector.CurrentPanel))];
