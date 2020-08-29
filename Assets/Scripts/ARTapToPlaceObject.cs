@@ -505,9 +505,11 @@ public class ARTapToPlaceObject : MonoBehaviour
     {
         //ARTapToPlaceObject temp = new ARTapToPlaceObject();
         Selected = selectionArray[TypeSelector.CurrentPanel, (TypeSelector.CurrentPanel == 0) ? (FlowerSelector.CurrentPanel) : ((TypeSelector.CurrentPanel == 1) ? (TreeSelector.CurrentPanel) : (ApplianceSelector.CurrentPanel))];
-        objectFootprint = selectionArrayFootprint[TypeSelector.CurrentPanel, (TypeSelector.CurrentPanel == 0) ? (FlowerSelector.CurrentPanel) : ((TypeSelector.CurrentPanel == 1) ? (TreeSelector.CurrentPanel) : (ApplianceSelector.CurrentPanel))];
+        //Selected = selectionArray[0, 1];
+        //objectFootprint = selectionArrayFootprint[TypeSelector.CurrentPanel, (TypeSelector.CurrentPanel == 0) ? (FlowerSelector.CurrentPanel) : ((TypeSelector.CurrentPanel == 1) ? (TreeSelector.CurrentPanel) : (ApplianceSelector.CurrentPanel))];
         objectToPlace = Selected;
         objectPreview = Selected;
+        Debug.LogWarning(Selected);
         //Debug.LogWarning((TypeSelector.CurrentPanel == 0) ? (FlowerSelector.CurrentPanel) : ((TypeSelector.CurrentPanel == 1) ? (TreeSelector.CurrentPanel) : (ApplianceSelector.CurrentPanel)));
         //objectToPlace = grass;
         //objectPreview = grass;
